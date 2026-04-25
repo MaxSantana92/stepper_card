@@ -1,16 +1,25 @@
+import { useTranslation } from 'react-i18next';
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 
 import { AppProviders } from './AppProviders';
 
 export const AppRoot = () => {
+  const { t } = useTranslation();
+
   return (
     <AppProviders>
       <StatusBar barStyle="dark-content" />
       <View style={styles.container}>
-        <Text accessibilityRole="header" style={styles.title}>
-          Stepper Card
+        <Text
+          accessibilityLabel={t('a11y.home.title')}
+          accessibilityRole="header"
+          style={styles.title}
+        >
+          {t('common.appTitle')}
         </Text>
-        <Text style={styles.subtitle}>Listo para empezar a desarrollar.</Text>
+        <Text accessibilityLabel={t('a11y.home.subtitle')} style={styles.subtitle}>
+          {t('home.readyToStart')}
+        </Text>
       </View>
     </AppProviders>
   );

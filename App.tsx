@@ -1,11 +1,11 @@
-import './src/app/i18n'
+import './src/app/i18n';
 
-import { useTranslation } from 'react-i18next'
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native'
+import { useTranslation } from 'react-i18next';
+import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 function App() {
-  const { t } = useTranslation()
-  const isDarkMode = useColorScheme() === 'dark'
+  const { t } = useTranslation();
+  const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <View style={styles.container}>
@@ -17,7 +17,7 @@ function App() {
         {t('home.readyToStart')}
       </Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -36,6 +36,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
-})
+});
 
-export default App
+export default App;
