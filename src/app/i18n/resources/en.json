@@ -62,6 +62,7 @@
       "nextDisabledHint": "Select a card to continue",
       "indicatorHint": "Shows user progress through the flow",
       "viewLabel": "Step {{step}} view",
+      "stepAnnouncement": "Step {{current}} of {{total}}: {{name}}",
       "controlsLabel": "Flow navigation controls"
     },
     "card": {

@@ -80,13 +80,35 @@ describe('StepRenderer', () => {
     expect(component?.root.findAllByProps({ accessibilityRole: 'summary' })).toHaveLength(0);
   });
 
-  it('exposes a step-aware testID and an accessibility label that includes the step number', async () => {
+  it('exposes a step-aware testID and an accessibility label that includes the step number and name', async () => {
     const component = await renderRenderer({ currentStep: 2 });
 
     const stepView = component?.root.findByProps({ testID: 'step-renderer-step-2' });
 
     expect(stepView).toBeDefined();
     expect(stepView?.props.accessibilityLabel).toContain('2');
+    expect(stepView?.props.accessibilityLabel).toContain(STEPPER_MAX_STEP.toString());
+    expect(stepView?.props.accessibilityLabel).toContain(
+      resources.es.translation.stepper.steps.details,
+    );
+  });
+
+  it.each([
+    [1, resources.es.translation.stepper.steps.intro],
+    [2, resources.es.translation.stepper.steps.details],
+    [STEPPER_MAX_STEP, resources.es.translation.stepper.steps.status],
+  ] as const)('announces step %i with its translated name in the accessibility label', async (step, name) => {
+    const component = await renderRenderer({ currentStep: step });
+    const stepView = component?.root.findByProps({ testID: `step-renderer-step-${step}` });
+
+    expect(stepView?.props.accessibilityLabel).toContain(name);
+  });
+
+  it('marks the step container as a polite live region so transitions are announced', async () => {
+    const component = await renderRenderer({ currentStep: 1 });
+    const stepView = component?.root.findByProps({ testID: 'step-renderer-step-1' });
+
+    expect(stepView?.props.accessibilityLiveRegion).toBe('polite');
   });
 
   it('clamps out-of-range steps into the valid range before rendering', async () => {

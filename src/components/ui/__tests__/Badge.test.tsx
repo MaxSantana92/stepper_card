@@ -17,6 +17,37 @@ describe('Badge', () => {
     expect(text?.props.accessibilityRole).toBe('text');
   });
 
+  it('exposes the text accessibility role on the container View as well', async () => {
+    let component: ReactTestRenderer.ReactTestRenderer | undefined;
+
+    await ReactTestRenderer.act(() => {
+      component = ReactTestRenderer.create(<Badge label="Habilitada" status="enabled" />);
+    });
+
+    const innerText = component?.root.findByProps({ children: 'Habilitada' });
+    const container = innerText?.parent;
+
+    expect(container?.props.accessible).toBe(true);
+    expect(container?.props.accessibilityRole).toBe('text');
+    expect(container?.props.accessibilityLabel).toBe('Habilitada');
+  });
+
+  it('honors a custom accessibility label without breaking the role', async () => {
+    let component: ReactTestRenderer.ReactTestRenderer | undefined;
+
+    await ReactTestRenderer.act(() => {
+      component = ReactTestRenderer.create(
+        <Badge accessibilityLabel="Estado habilitado" label="Habilitada" status="enabled" />,
+      );
+    });
+
+    const innerText = component?.root.findByProps({ children: 'Habilitada' });
+    const container = innerText?.parent;
+
+    expect(container?.props.accessibilityLabel).toBe('Estado habilitado');
+    expect(container?.props.accessibilityRole).toBe('text');
+  });
+
   it.each([
     ['enabled', colors.success, colors.successSurface],
     ['disabled', colors.danger, colors.dangerSurface],
@@ -29,11 +60,10 @@ describe('Badge', () => {
       component = ReactTestRenderer.create(<Badge label={status} status={status} />);
     });
 
-    const container = component?.root.findByProps({ accessibilityRole: 'text' }).parent;
+    const innerText = component?.root.findByProps({ children: status });
+    const container = innerText?.parent;
     const containerStyle = container?.props.style as { backgroundColor?: string };
-    const textStyle = component?.root.findByProps({ accessibilityRole: 'text' }).props.style as {
-      color?: string;
-    };
+    const textStyle = innerText?.props.style as { color?: string };
 
     expect(containerStyle?.backgroundColor).toBe(background);
     expect(textStyle?.color).toBe(foreground);

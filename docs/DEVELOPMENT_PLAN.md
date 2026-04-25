@@ -44,7 +44,7 @@
 - [x] **Task 4.1: Feature Orchestration (`StepRenderer`)**
   - Branch: `feat/step-renderer`
   - Action: Create `StepRenderer.tsx` to handle dynamic views based on `currentStep`. Run checks and stop.
-- [ ] **Task 4.2: Navigation Controls**
+- [x] **Task 4.2: Navigation Controls**
   - Branch: `feat/navigation-controls`
   - Action: Implement `NavigationControls.tsx` with edge-case logic (disabled states). Run checks and stop.
 - [ ] **Task 4.3: Accessibility (a11y) Audit**
@@ -56,7 +56,7 @@
 - [x] **Task 4.1: Feature Orchestration (`StepRenderer`)**
   - Branch: `feat/step-renderer`
   - Action: Create `src/features/stepperFlow/components/StepRenderer.tsx`. This component must consume `useStepper()` (React 19 style) and dynamically render Step 1, Step 2, or the `StatusCard` (Step 3) based on `currentStep`.
-- [ ] **Task 4.2: Navigation Controls & Edge Cases**
+- [x] **Task 4.2: Navigation Controls & Edge Cases**
   - Branch: `feat/navigation-controls`
   - Action: Implement `NavigationControls.tsx` (Next/Back buttons).
   - Rules: Disable "Next" if loading or if no card is selected in Step 2. Handle the final state gracefully.

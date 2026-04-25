@@ -43,6 +43,7 @@ export const StepIndicator = ({
     <View
       accessibilityHint={t('a11y.stepper.indicatorHint')}
       accessibilityLabel={t('stepper.indicator.label')}
+      accessibilityLiveRegion="polite"
       accessibilityRole="progressbar"
       accessibilityValue={{
         min: safeMin,

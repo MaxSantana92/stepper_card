@@ -65,4 +65,11 @@ describe('StepIndicator', () => {
 
     expect(progressbarHigh?.props.accessibilityValue.now).toBe(STEPPER_MAX_STEP);
   });
+
+  it('marks the progress region as a polite live region so changes are announced', async () => {
+    const component = await renderIndicator(2);
+    const progressbar = component?.root.findByProps({ accessibilityRole: 'progressbar' });
+
+    expect(progressbar?.props.accessibilityLiveRegion).toBe('polite');
+  });
 });

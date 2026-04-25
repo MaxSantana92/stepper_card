@@ -37,7 +37,12 @@ export const Badge = ({ label, status, accessibilityLabel, style }: BadgeProps) 
   };
 
   return (
-    <View accessibilityLabel={accessibilityLabel ?? label} accessible style={containerStyle}>
+    <View
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityRole="text"
+      accessible
+      style={containerStyle}
+    >
       <Text accessibilityRole="text" style={textStyle}>
         {label}
       </Text>
