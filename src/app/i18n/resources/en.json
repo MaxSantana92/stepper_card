@@ -8,7 +8,8 @@
   "stepper": {
     "navigation": {
       "back": "Back",
-      "next": "Next"
+      "next": "Next",
+      "finish": "Finish"
     },
     "steps": {
       "intro": "Introduction",
@@ -57,8 +58,11 @@
     "stepper": {
       "backHint": "Returns to the previous step",
       "nextHint": "Moves to the next step",
+      "finishHint": "Closes the flow after reviewing the card status",
+      "nextDisabledHint": "Select a card to continue",
       "indicatorHint": "Shows user progress through the flow",
-      "viewLabel": "Step {{step}} view"
+      "viewLabel": "Step {{step}} view",
+      "controlsLabel": "Flow navigation controls"
     },
     "card": {
       "summary": "{{type}} card ending in {{lastFour}}, status {{status}}",
