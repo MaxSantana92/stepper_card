@@ -12,8 +12,10 @@ You have explicit permission to manage the Git lifecycle following the "Document
   2. Implement logic, UI, and tests following the sections below.
   3. Validate with `pnpm check` (Biome) and `pnpm test` (Jest).
   4. After successful validation, commit: `git add . && git commit -m "feat: descriptive message"`.
-  5. Merge back to main: `git checkout main && git merge feat/task-name`.
-  6. Update `@docs/DEVELOPMENT_PLAN.md` by marking the task as completed [x].
+  5. Push the feature branch and open a Pull Request against `develop`.
+  6. Wait for review and approval; direct merges to `develop` without PR are forbidden.
+  7. Merge to `develop` only through the approved PR.
+  8. Update `@docs/DEVELOPMENT_PLAN.md` by marking the task as completed [x].
 - **Commit Style:** Use Conventional Commits (feat, fix, docs, style, refactor, test, chore).
 
 # 2. Tech Stack & Performance
