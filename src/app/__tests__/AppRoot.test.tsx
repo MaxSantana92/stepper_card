@@ -1,13 +1,14 @@
 import ReactTestRenderer from 'react-test-renderer';
-import App from '../App';
-import { resources } from '../src/app/i18n';
 
-describe('App entry', () => {
-  it('renders the initial app screen', async () => {
+import { AppRoot } from '../AppRoot';
+import { resources } from '../i18n';
+
+describe('AppRoot entry', () => {
+  it('renders the initial app screen using i18n resources', async () => {
     let component: ReactTestRenderer.ReactTestRenderer | undefined;
 
     await ReactTestRenderer.act(() => {
-      component = ReactTestRenderer.create(<App />);
+      component = ReactTestRenderer.create(<AppRoot />);
     });
 
     const tree = JSON.stringify(component?.toJSON());
