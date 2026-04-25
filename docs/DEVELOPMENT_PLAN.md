@@ -65,9 +65,12 @@ Use this checklist **before** `git commit`, `git push`, or opening a PR to `deve
 
 ## Phase 3: UI Components (Shadcn Style)
 
-- [ ] **Task 3.1: Atomic Components**
+- [x] **Task 3.1: Atomic Components**
   - Branch: `feat/ui-atoms`
   - Action: `Button`, `Typography`, `Badge` with NativeWind.
+  - Notes: NativeWind not yet installed; implemented with React Native `StyleSheet`
+    plus a centralized Slate/Indigo theme token file (`src/components/ui/theme.ts`).
+    Button uses `ref` as a standard prop (no `forwardRef`).
 - [ ] **Task 3.2: Status Card & Stepper UI**
   - Branch: `feat/ui-features`
   - Action: Implement `StatusCard` and `StepIndicator`.
