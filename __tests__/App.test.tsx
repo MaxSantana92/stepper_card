@@ -1,23 +1,17 @@
 import ReactTestRenderer from 'react-test-renderer';
 import App from '../App';
 
-jest.mock('react-native-safe-area-context', () => {
-  const React = require('react');
+describe('App entry', () => {
+  it('renders the initial app screen', async () => {
+    let component: ReactTestRenderer.ReactTestRenderer | undefined;
 
-  return {
-    SafeAreaProvider: ({ children }: { children: React.ReactNode }) => children,
-  };
-});
+    await ReactTestRenderer.act(() => {
+      component = ReactTestRenderer.create(<App />);
+    });
 
-test('renders the initial app screen', async () => {
-  let component: ReactTestRenderer.ReactTestRenderer | undefined;
+    const tree = JSON.stringify(component?.toJSON());
 
-  await ReactTestRenderer.act(() => {
-    component = ReactTestRenderer.create(<App />);
+    expect(tree).toContain('Stepper Card');
+    expect(tree).toContain('Listo para empezar a desarrollar.');
   });
-
-  const tree = JSON.stringify(component?.toJSON());
-
-  expect(tree).toContain('Stepper Card');
-  expect(tree).toContain('Listo para empezar a desarrollar.');
 });
