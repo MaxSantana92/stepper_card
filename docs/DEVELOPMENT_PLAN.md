@@ -30,6 +30,14 @@
 - [ ] **Task 2.2: i18n Integration**
   - Branch: `feat/i18n-setup`
   - Action: Configure `react-i18next` with ES/EN dictionaries.
+  - Requirements:
+    - Initialize i18n from `src/app/i18n`.
+    - Keep Spanish (`es`) as the default and fallback language.
+    - Store visible text and accessibility copy in translation resources.
+    - Use domain-based keys: `common.*`, `home.*`, `stepper.*`, `card.*`, and `a11y.*`.
+    - Add every new key to both `es` and `en`.
+    - Add a contract test to keep translation keys synchronized.
+  - Validation: `pnpm check` and `pnpm test` must pass before closing the task.
 
 ## Phase 3: UI Components (Shadcn Style)
 

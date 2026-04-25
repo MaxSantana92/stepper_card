@@ -1,0 +1,43 @@
+{
+  "common": {
+    "appTitle": "Stepper Card"
+  },
+  "home": {
+    "readyToStart": "Listo para empezar a desarrollar."
+  },
+  "stepper": {
+    "navigation": {
+      "back": "Volver",
+      "next": "Continuar"
+    },
+    "steps": {
+      "intro": "Introducción",
+      "details": "Detalle",
+      "status": "Estado de tarjeta"
+    }
+  },
+  "card": {
+    "labels": {
+      "balance": "Saldo disponible",
+      "expiryDate": "Vencimiento",
+      "holderName": "Titular",
+      "lastFour": "Terminada en"
+    },
+    "statuses": {
+      "disabled": "Deshabilitada",
+      "enabled": "Habilitada",
+      "paused": "Pausada",
+      "unpaused": "Reactivada"
+    }
+  },
+  "a11y": {
+    "home": {
+      "subtitle": "Mensaje de estado inicial del proyecto",
+      "title": "Título de la aplicación"
+    },
+    "stepper": {
+      "backHint": "Vuelve al paso anterior",
+      "nextHint": "Avanza al siguiente paso"
+    }
+  }
+}
