@@ -12,10 +12,8 @@ You have explicit permission to manage the Git lifecycle following the "Document
   2. Implement logic, UI, and tests following the sections below.
   3. Validate with `pnpm check` (Biome) and `pnpm test` (Jest).
   4. After successful validation, commit: `git add . && git commit -m "feat: descriptive message"`.
-  5. Push the feature branch and open a Pull Request against `develop`.
-  6. Wait for review and approval; direct merges to `develop` without PR are forbidden.
-  7. Merge to `develop` only through the approved PR.
-  8. Update `@docs/DEVELOPMENT_PLAN.md` by marking the task as completed [x].
+  5. Merge back to main: `git checkout main && git merge feat/task-name`.
+  6. Update `@docs/DEVELOPMENT_PLAN.md` by marking the task as completed [x].
 - **Commit Style:** Use Conventional Commits (feat, fix, docs, style, refactor, test, chore).
 
 # 2. Tech Stack & Performance
@@ -53,7 +51,13 @@ Organize the `src/` folder as follows:
   - `accessibilityRole` (e.g., 'button', 'header')
   - `accessibilityLabel` (i18n compatible)
   - `accessibilityHint` for complex actions.
-- **i18n:** Use `react-i18next`. Hardcoded strings are forbidden. Use `t('namespace.key')`.
+- **i18n:** Use `react-i18next`. Hardcoded user-facing strings are forbidden. Use `t('namespace.key')`.
+  - Initialize and reuse the global config from `src/app/i18n`.
+  - Spanish (`es`) is the default and fallback language.
+  - Add every new key to both `src/app/i18n/resources/es.json` and `src/app/i18n/resources/en.json`.
+  - Group keys by domain: `common.*`, `home.*`, `stepper.*`, `card.*`, and `a11y.*`.
+  - All visible UI copy, `accessibilityLabel`, and `accessibilityHint` values must come from i18n.
+  - UI tasks must keep the ES/EN key parity test passing before completion.
 
 # 6. Coding Standards
 
@@ -61,3 +65,12 @@ Organize the `src/` folder as follows:
 - Strict TypeScript: No `any`. Use Discriminated Unions for Card States.
 - Avoid prop-drilling; use the established Feature Context.
 - Biome check MUST pass before finishing any task.
+
+# 7. React 19 Standards (CRITICAL)
+
+This project uses React 19. You MUST follow these modern patterns:
+
+- Do NOT use `forwardRef`. Pass `ref` as a standard prop in the component interface.
+- Do NOT use `Context.Provider`. Render `<Context>` directly (e.g., `<MyContext value={...}>`).
+- Use the new `use()` hook instead of `useContext()` to consume context.
+- Keep components pure and use `useMemo` / `useCallback` only when props/calculations are genuinely expensive (React Compiler handles the rest conceptually, though RN doesn't have it natively yet, optimize logically).
