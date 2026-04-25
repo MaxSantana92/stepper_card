@@ -62,6 +62,7 @@
       "nextDisabledHint": "Seleccioná una tarjeta para poder continuar",
       "indicatorHint": "Indica el avance del usuario en el flujo",
       "viewLabel": "Vista del paso {{step}}",
+      "stepAnnouncement": "Paso {{current}} de {{total}}: {{name}}",
       "controlsLabel": "Controles de navegación del flujo"
     },
     "card": {

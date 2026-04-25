@@ -22,6 +22,12 @@ const clampStep = (value: number, min: number, max: number): number => {
   return value;
 };
 
+const STEP_NAME_KEY_BY_STEP: Record<number, string> = {
+  1: 'stepper.steps.intro',
+  2: 'stepper.steps.details',
+  [STEPPER_MAX_STEP]: 'stepper.steps.status',
+};
+
 export const StepRenderer = ({ style }: StepRendererProps) => {
   const { t } = useTranslation();
   const { currentStep, selectedCard } = useStepper();
@@ -31,11 +37,21 @@ export const StepRenderer = ({ style }: StepRendererProps) => {
     [currentStep],
   );
 
-  const accessibilityLabel = t('a11y.stepper.viewLabel', { step: safeStep });
+  const stepName = useMemo(() => {
+    const key = STEP_NAME_KEY_BY_STEP[safeStep];
+    return key ? t(key) : t('a11y.stepper.viewLabel', { step: safeStep });
+  }, [safeStep, t]);
+
+  const accessibilityLabel = t('a11y.stepper.stepAnnouncement', {
+    current: safeStep,
+    total: STEPPER_MAX_STEP,
+    name: stepName,
+  });
 
   return (
     <View
       accessibilityLabel={accessibilityLabel}
+      accessibilityLiveRegion="polite"
       accessibilityRole="none"
       accessible
       style={[styles.container, style]}
