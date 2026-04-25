@@ -7,17 +7,18 @@
    - Create the branch.
    - Implement code following `.cursorrules`.
    - Run tests (`pnpm test`) and linting (`pnpm check`).
-   - If successful, commit and prepare for merge.
+   - If successful, commit, push, and open a PR to `develop`.
+   - Wait for review/approval before merge. Direct merge to `develop` is not allowed.
 3. Update this document by marking tasks as completed [x].
 
 ---
 
 ## Phase 1: Setup & Foundation
 
-- [ ] **Task 1.1: Document Initialization**
+- [x] **Task 1.1: Document Initialization**
   - Branch: `feat/docs-init`
   - Action: Ensure `.cursorrules`, `biome.json`, and `mockData.json` are in sync.
-- [ ] **Task 1.2: Base Architecture**
+- [x] **Task 1.2: Base Architecture**
   - Branch: `feat/architecture-setup`
   - Action: Create FSD folder structure and initial `App.tsx` cleanup.
 

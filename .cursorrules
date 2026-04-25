@@ -65,3 +65,12 @@ Organize the `src/` folder as follows:
 - Strict TypeScript: No `any`. Use Discriminated Unions for Card States.
 - Avoid prop-drilling; use the established Feature Context.
 - Biome check MUST pass before finishing any task.
+
+# 7. React 19 Standards (CRITICAL)
+
+This project uses React 19. You MUST follow these modern patterns:
+
+- Do NOT use `forwardRef`. Pass `ref` as a standard prop in the component interface.
+- Do NOT use `Context.Provider`. Render `<Context>` directly (e.g., `<MyContext value={...}>`).
+- Use the new `use()` hook instead of `useContext()` to consume context.
+- Keep components pure and use `useMemo` / `useCallback` only when props/calculations are genuinely expensive (React Compiler handles the rest conceptually, though RN doesn't have it natively yet, optimize logically).
