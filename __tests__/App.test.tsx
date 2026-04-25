@@ -1,6 +1,14 @@
 import ReactTestRenderer from 'react-test-renderer';
 import App from '../App';
 
+jest.mock('react-native-safe-area-context', () => {
+  const React = require('react');
+
+  return {
+    SafeAreaProvider: ({ children }: { children: React.ReactNode }) => children,
+  };
+});
+
 test('renders the initial app screen', async () => {
   let component: ReactTestRenderer.ReactTestRenderer | undefined;
 

@@ -14,10 +14,10 @@
 
 ## Phase 1: Setup & Foundation
 
-- [ ] **Task 1.1: Document Initialization**
+- [x] **Task 1.1: Document Initialization**
   - Branch: `feat/docs-init`
   - Action: Ensure `.cursorrules`, `biome.json`, and `mockData.json` are in sync.
-- [ ] **Task 1.2: Base Architecture**
+- [x] **Task 1.2: Base Architecture**
   - Branch: `feat/architecture-setup`
   - Action: Create FSD folder structure and initial `App.tsx` cleanup.
 
