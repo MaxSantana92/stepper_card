@@ -1,1 +1,1 @@
-export {};
+export { type UseStepperResult, useStepper } from './useStepper';

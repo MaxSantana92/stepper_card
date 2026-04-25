@@ -18,6 +18,15 @@
     "indicator": {
       "label": "Progreso del flujo",
       "progress": "Paso {{current}} de {{total}}"
+    },
+    "intro": {
+      "description": "Te vamos a guiar en el detalle de tu producto financiero en pocos pasos."
+    },
+    "details": {
+      "description": "Repasá la información asociada a tu tarjeta antes de ver su estado final."
+    },
+    "status": {
+      "fallback": "Todavía no se seleccionó una tarjeta para mostrar su estado."
     }
   },
   "card": {
@@ -48,7 +57,8 @@
     "stepper": {
       "backHint": "Vuelve al paso anterior",
       "nextHint": "Avanza al siguiente paso",
-      "indicatorHint": "Indica el avance del usuario en el flujo"
+      "indicatorHint": "Indica el avance del usuario en el flujo",
+      "viewLabel": "Vista del paso {{step}}"
     },
     "card": {
       "summary": "Tarjeta {{type}} terminada en {{lastFour}}, estado {{status}}",
