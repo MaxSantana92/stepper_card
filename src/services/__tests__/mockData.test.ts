@@ -1,24 +1,33 @@
+import type { CardStatusKind } from '../../features/stepperFlow/types';
+
+interface MockCardStatus {
+  kind: CardStatusKind;
+  reason?: string;
+  pausedAt?: string;
+  resumedAt?: string;
+}
+
 const mockData = require('../mockData.json') as {
   cards: Array<{
     id: string;
     type: string;
     lastFour: string;
     holderName: string;
-    status: 'enabled' | 'disabled' | 'paused' | 'unpaused';
+    status: MockCardStatus;
     balance: number;
     expiryDate: string;
   }>;
 };
 
-const expectedStatuses = ['enabled', 'disabled', 'paused', 'unpaused'] as const;
+const expectedStatuses: readonly CardStatusKind[] = ['enabled', 'disabled', 'paused', 'unpaused'];
 
 describe('mockData contract', () => {
-  it('contains all card statuses required by the stepper flow', () => {
-    const statuses = new Set(mockData.cards.map((card) => card.status));
+  it('contains all card status kinds required by the stepper flow', () => {
+    const statusKinds = new Set(mockData.cards.map((card) => card.status.kind));
 
-    expect(statuses.size).toBe(expectedStatuses.length);
+    expect(statusKinds.size).toBe(expectedStatuses.length);
     for (const status of expectedStatuses) {
-      expect(statuses.has(status)).toBe(true);
+      expect(statusKinds.has(status)).toBe(true);
     }
   });
 
@@ -30,6 +39,7 @@ describe('mockData contract', () => {
       expect(card.holderName).toBeTruthy();
       expect(card.expiryDate).toBeTruthy();
       expect(Number.isFinite(card.balance)).toBe(true);
+      expect(card.status.kind).toBeTruthy();
     }
   });
 });
