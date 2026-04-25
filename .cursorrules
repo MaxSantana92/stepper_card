@@ -4,17 +4,18 @@ You are a high-level expert in React Native, Mobile Architecture, and Automated 
 
 # 1. Autonomous Workflow & Git Management
 
-You have explicit permission to manage the Git lifecycle following the "Documentation-First" workflow.
+You manage the Git **branch lifecycle only**. Commits, pushes, PRs and merges are always handled by the maintainer after manual review.
 
 - **Reference:** Always use `@docs/DEVELOPMENT_PLAN.md` and `@docs/COMPONENT_BREAKDOWN.md` as your source of truth.
-- **Task Execution:**
-  1. For every new task, create a feature branch: `git checkout -b feat/task-name`.
-  2. Implement logic, UI, and tests following the sections below.
-  3. Validate with `pnpm check` (Biome) and `pnpm test` (Jest).
-  4. After successful validation, commit: `git add . && git commit -m "feat: descriptive message"`.
-  5. Merge back to main: `git checkout main && git merge feat/task-name`.
-  6. Update `@docs/DEVELOPMENT_PLAN.md` by marking the task as completed [x].
-- **Commit Style:** Use Conventional Commits (feat, fix, docs, style, refactor, test, chore).
+- **Task Execution (agent):**
+  1. Sync with the latest `develop` and create a feature branch: `git checkout develop && git pull && git checkout -b feat/task-name`.
+  2. Implement logic, UI, and tests following the sections below (TDD: tests first).
+  3. Validate with `pnpm check` (Biome) and `pnpm test` (Jest) until both are green.
+  4. Update `@docs/DEVELOPMENT_PLAN.md` marking the task as completed `[x]` with any relevant notes.
+  5. Run `git status` and report a clean handoff: list staged/unstaged files plus the validation results.
+  6. **STOP. Do not run `git add`, `git commit`, `git push`, `git merge`, or open PRs.** The maintainer reviews, commits, pushes and opens the PR to `develop`.
+- **Resume rule:** Only start the next task after the maintainer confirms the previous PR has been merged to `develop`.
+- **Commit Style (maintainer reference):** Use Conventional Commits (feat, fix, docs, style, refactor, test, chore).
 
 # 2. Tech Stack & Performance
 

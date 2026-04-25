@@ -14,6 +14,10 @@
       "intro": "Introducción",
       "details": "Detalle",
       "status": "Estado de tarjeta"
+    },
+    "indicator": {
+      "label": "Progreso del flujo",
+      "progress": "Paso {{current}} de {{total}}"
     }
   },
   "card": {
@@ -28,6 +32,12 @@
       "enabled": "Habilitada",
       "paused": "Pausada",
       "unpaused": "Reactivada"
+    },
+    "types": {
+      "VISA_DEBIT": "Visa Débito",
+      "MASTERCARD_CREDIT": "Mastercard Crédito",
+      "VISA_PLATINUM": "Visa Platinum",
+      "VISA_SIGNATURE": "Visa Signature"
     }
   },
   "a11y": {
@@ -37,7 +47,13 @@
     },
     "stepper": {
       "backHint": "Vuelve al paso anterior",
-      "nextHint": "Avanza al siguiente paso"
+      "nextHint": "Avanza al siguiente paso",
+      "indicatorHint": "Indica el avance del usuario en el flujo"
+    },
+    "card": {
+      "summary": "Tarjeta {{type}} terminada en {{lastFour}}, estado {{status}}",
+      "balanceHint": "Saldo disponible en pesos",
+      "statusBadgeHint": "Estado actual de la tarjeta"
     }
   }
 }

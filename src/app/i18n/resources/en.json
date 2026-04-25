@@ -14,6 +14,10 @@
       "intro": "Introduction",
       "details": "Details",
       "status": "Card status"
+    },
+    "indicator": {
+      "label": "Flow progress",
+      "progress": "Step {{current}} of {{total}}"
     }
   },
   "card": {
@@ -28,6 +32,12 @@
       "enabled": "Enabled",
       "paused": "Paused",
       "unpaused": "Reactivated"
+    },
+    "types": {
+      "VISA_DEBIT": "Visa Debit",
+      "MASTERCARD_CREDIT": "Mastercard Credit",
+      "VISA_PLATINUM": "Visa Platinum",
+      "VISA_SIGNATURE": "Visa Signature"
     }
   },
   "a11y": {
@@ -37,7 +47,13 @@
     },
     "stepper": {
       "backHint": "Returns to the previous step",
-      "nextHint": "Moves to the next step"
+      "nextHint": "Moves to the next step",
+      "indicatorHint": "Shows user progress through the flow"
+    },
+    "card": {
+      "summary": "{{type}} card ending in {{lastFour}}, status {{status}}",
+      "balanceHint": "Available balance in pesos",
+      "statusBadgeHint": "Current card status"
     }
   }
 }
