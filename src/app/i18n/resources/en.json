@@ -18,6 +18,15 @@
     "indicator": {
       "label": "Flow progress",
       "progress": "Step {{current}} of {{total}}"
+    },
+    "intro": {
+      "description": "We will walk you through the details of your financial product in a few steps."
+    },
+    "details": {
+      "description": "Review the information linked to your card before seeing its final status."
+    },
+    "status": {
+      "fallback": "No card has been selected yet to show its status."
     }
   },
   "card": {
@@ -48,7 +57,8 @@
     "stepper": {
       "backHint": "Returns to the previous step",
       "nextHint": "Moves to the next step",
-      "indicatorHint": "Shows user progress through the flow"
+      "indicatorHint": "Shows user progress through the flow",
+      "viewLabel": "Step {{step}} view"
     },
     "card": {
       "summary": "{{type}} card ending in {{lastFour}}, status {{status}}",
