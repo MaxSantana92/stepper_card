@@ -1,13 +1,21 @@
+import './src/app/i18n';
+
+import { useTranslation } from 'react-i18next';
 import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 function App() {
+  const { t } = useTranslation();
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Text style={styles.title}>Stepper Card</Text>
-      <Text style={styles.subtitle}>Listo para empezar a desarrollar.</Text>
+      <Text accessibilityLabel={t('a11y.home.title')} style={styles.title}>
+        {t('common.appTitle')}
+      </Text>
+      <Text accessibilityLabel={t('a11y.home.subtitle')} style={styles.subtitle}>
+        {t('home.readyToStart')}
+      </Text>
     </View>
   );
 }

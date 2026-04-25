@@ -51,7 +51,13 @@ Organize the `src/` folder as follows:
   - `accessibilityRole` (e.g., 'button', 'header')
   - `accessibilityLabel` (i18n compatible)
   - `accessibilityHint` for complex actions.
-- **i18n:** Use `react-i18next`. Hardcoded strings are forbidden. Use `t('namespace.key')`.
+- **i18n:** Use `react-i18next`. Hardcoded user-facing strings are forbidden. Use `t('namespace.key')`.
+  - Initialize and reuse the global config from `src/app/i18n`.
+  - Spanish (`es`) is the default and fallback language.
+  - Add every new key to both `src/app/i18n/resources/es.json` and `src/app/i18n/resources/en.json`.
+  - Group keys by domain: `common.*`, `home.*`, `stepper.*`, `card.*`, and `a11y.*`.
+  - All visible UI copy, `accessibilityLabel`, and `accessibilityHint` values must come from i18n.
+  - UI tasks must keep the ES/EN key parity test passing before completion.
 
 # 6. Coding Standards
 
