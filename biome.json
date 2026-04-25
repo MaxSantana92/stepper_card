@@ -1,0 +1,64 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/android",
+      "!**/ios",
+      "!**/coverage",
+      "!**/dist",
+      "!**/build",
+      "!**/.gradle"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    },
+    "globals": [
+      "__DEV__",
+      "describe",
+      "it",
+      "test",
+      "expect",
+      "beforeAll",
+      "afterAll",
+      "beforeEach",
+      "afterEach",
+      "jest"
+    ]
+  },
+  "overrides": [
+    {
+      "includes": ["*.config.js", "babel.config.js", "metro.config.js", "jest.config.js"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useNodejsImportProtocol": "off"
+          }
+        }
+      }
+    }
+  ]
+}

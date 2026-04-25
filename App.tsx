@@ -1,37 +1,13 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <Text style={styles.title}>Stepper Card</Text>
+      <Text style={styles.subtitle}>Listo para empezar a desarrollar.</Text>
     </View>
   );
 }
@@ -39,6 +15,18 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 24,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+  },
+  subtitle: {
+    marginTop: 8,
+    fontSize: 16,
+    textAlign: 'center',
   },
 });
 
