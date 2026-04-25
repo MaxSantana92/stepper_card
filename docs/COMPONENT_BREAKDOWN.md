@@ -13,7 +13,7 @@
 - [ ] **AC 1: Navigation.** Must have at least 3 steps. Navigation must be bidirectional (Next/Back).
 - [ ] **AC 2: Final State.** The last step must render a Card reflecting one of 4 states: `enabled`, `disabled`, `paused`, `unpaused`.
 - [ ] **AC 3: Context Persistence.** Stepper progress and Card data must persist if the user navigates between steps.
-- [ ] **AC 4: i18n.** All labels must support Spanish and English.
+- [ ] **AC 4: i18n.** All visible labels and accessibility strings must support Spanish and English through `react-i18next`.
 - [ ] **AC 5: A11y.** Interactive elements must be accessible via screen readers.
 
 ---
@@ -46,3 +46,18 @@
 2. Create `useStepper` hook to encapsulate navigation logic.
 3. Implement `i18n` config and JSON files.
 4. Setup Jest tests for `stepperReducer`.
+
+---
+
+## i18n Development Rules
+
+- Components must use `useTranslation()` or receive already translated copy through props.
+- Hardcoded user-facing strings are forbidden in components, hooks, and accessibility props.
+- Translation keys must be grouped by domain:
+  - `common.*` for shared application copy.
+  - `home.*` for the initial screen.
+  - `stepper.*` for steps and navigation controls.
+  - `card.*` for card labels and status values.
+  - `a11y.*` for `accessibilityLabel` and `accessibilityHint`.
+- Every new translation key must be added to both `src/app/i18n/resources/es.json` and `src/app/i18n/resources/en.json`.
+- UI work is not complete unless translation key parity tests pass.

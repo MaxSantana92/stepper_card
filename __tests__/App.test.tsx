@@ -1,5 +1,6 @@
 import ReactTestRenderer from 'react-test-renderer';
 import App from '../App';
+import { resources } from '../src/app/i18n';
 
 test('renders the initial app screen', async () => {
   let component: ReactTestRenderer.ReactTestRenderer | undefined;
@@ -10,6 +11,6 @@ test('renders the initial app screen', async () => {
 
   const tree = JSON.stringify(component?.toJSON());
 
-  expect(tree).toContain('Stepper Card');
-  expect(tree).toContain('Listo para empezar a desarrollar.');
+  expect(tree).toContain(resources.es.translation.common.appTitle);
+  expect(tree).toContain(resources.es.translation.home.readyToStart);
 });
