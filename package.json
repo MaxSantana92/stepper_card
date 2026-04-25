@@ -5,6 +5,8 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
