@@ -8,7 +8,8 @@
   "stepper": {
     "navigation": {
       "back": "Volver",
-      "next": "Continuar"
+      "next": "Continuar",
+      "finish": "Finalizar"
     },
     "steps": {
       "intro": "Introducción",
@@ -57,8 +58,11 @@
     "stepper": {
       "backHint": "Vuelve al paso anterior",
       "nextHint": "Avanza al siguiente paso",
+      "finishHint": "Cierra el flujo después de revisar el estado de tu tarjeta",
+      "nextDisabledHint": "Seleccioná una tarjeta para poder continuar",
       "indicatorHint": "Indica el avance del usuario en el flujo",
-      "viewLabel": "Vista del paso {{step}}"
+      "viewLabel": "Vista del paso {{step}}",
+      "controlsLabel": "Controles de navegación del flujo"
     },
     "card": {
       "summary": "Tarjeta {{type}} terminada en {{lastFour}}, estado {{status}}",
