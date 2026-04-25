@@ -1,11 +1,19 @@
 export const STEPPER_MIN_STEP = 1;
 export const STEPPER_MAX_STEP = 3;
 
-export type CardStatus = 'enabled' | 'disabled' | 'paused' | 'unpaused';
+export type CardStatusKind = 'enabled' | 'disabled' | 'paused' | 'unpaused';
+
+export type CardStatus =
+  | { kind: 'enabled' }
+  | { kind: 'disabled'; reason?: string }
+  | { kind: 'paused'; pausedAt?: string }
+  | { kind: 'unpaused'; resumedAt?: string };
+
+export type CardType = 'VISA_DEBIT' | 'MASTERCARD_CREDIT' | 'VISA_PLATINUM' | 'VISA_SIGNATURE';
 
 export interface FinancialCard {
   id: string;
-  type: 'VISA_DEBIT' | 'MASTERCARD_CREDIT' | 'VISA_PLATINUM' | 'VISA_SIGNATURE';
+  type: CardType;
   lastFour: string;
   holderName: string;
   status: CardStatus;
