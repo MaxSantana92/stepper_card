@@ -4,7 +4,11 @@
   },
   "home": {
     "readyToStart": "Ready to start development.",
-    "flowIntro": "Walk through the steps to review your card's status."
+    "flowIntro": "Walk through the steps to review your card's status.",
+    "languageSwitch": {
+      "en": "Switch to English",
+      "es": "Switch to Spanish"
+    }
   },
   "stepper": {
     "navigation": {
@@ -62,7 +66,8 @@
   "a11y": {
     "home": {
       "subtitle": "Initial project status message",
-      "title": "Application title"
+      "title": "Application title",
+      "languageToggleHint": "Toggles the application language"
     },
     "stepper": {
       "backHint": "Returns to the previous step",

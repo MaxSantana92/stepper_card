@@ -3,7 +3,7 @@ import ReactTestRenderer from 'react-test-renderer';
 import type { FinancialCard } from '../../features/stepperFlow/types';
 import mockData from '../../services/mockData.json';
 import { AppRoot } from '../AppRoot';
-import { resources } from '../i18n';
+import i18n, { defaultLanguage, resources } from '../i18n';
 
 const cards = mockData.cards as FinancialCard[];
 
@@ -97,12 +97,40 @@ const pressBack = async (component: ReactTestRenderer.ReactTestRenderer | undefi
 };
 
 describe('AppRoot integration', () => {
+  beforeEach(async () => {
+    await ReactTestRenderer.act(async () => {
+      await i18n.changeLanguage(defaultLanguage);
+    });
+  });
+
   it('renders the app header with the i18n title and flow intro copy', async () => {
     const component = await renderApp();
     const tree = JSON.stringify(component?.toJSON());
 
     expect(tree).toContain(resources.es.translation.common.appTitle);
     expect(tree).toContain(resources.es.translation.home.flowIntro);
+  });
+
+  it('toggles the app language from Spanish to English from the header button', async () => {
+    const component = await renderApp();
+
+    expect(findPressable(component, 'language-toggle-button')?.props.accessibilityLabel).toBe(
+      resources.es.translation.home.languageSwitch.en,
+    );
+    expect(JSON.stringify(component?.toJSON())).toContain(
+      resources.es.translation.stepper.steps.intro,
+    );
+
+    await ReactTestRenderer.act(() => {
+      findPressable(component, 'language-toggle-button')?.props.onPress();
+    });
+
+    const treeAfterToggle = JSON.stringify(component?.toJSON());
+    expect(treeAfterToggle).toContain(resources.en.translation.stepper.steps.intro);
+    expect(treeAfterToggle).toContain(resources.en.translation.home.flowIntro);
+    expect(findPressable(component, 'language-toggle-button')?.props.accessibilityLabel).toBe(
+      resources.en.translation.home.languageSwitch.es,
+    );
   });
 
   it('mounts a single StepperProvider exposing the stepper UI on the first step', async () => {
