@@ -1,6 +1,56 @@
 # Stepper + Status Card
 
-Aplicación móvil en React Native que resuelve el desafío técnico **"Stepper + Card con Estados"**: un flujo informativo de varios pasos que termina en una tarjeta capaz de reflejar y alternar los estados *habilitado*, *deshabilitado*, *pausado* y *despausado*.
+## Onboarding para evaluación del challenge
+
+Esta sección está pensada para **quien debe revisar la entrega**: permite comprobar el cumplimiento del enunciado y ubicar el código relevante sin leer el documento entero de punta a punta.
+
+### Verificación rápida (sin dispositivo)
+
+1. **Prerrequisitos:** Node.js ≥ 22.11 y pnpm (detalle en [Setup y prerrequisitos](#setup-y-prerrequisitos)).
+2. Instalación: `pnpm install`.
+3. Calidad estática: `pnpm check` (Biome: lint + formato; no escribe archivos).
+4. Tests: `pnpm test` (Jest; la suite debe finalizar sin fallos).
+
+Si estos tres comandos están en verde, la base del challenge (tipos, reducer, i18n, integración del flujo) está automatizada en CI local.
+
+### Verificación en emulador o dispositivo
+
+1. Entorno React Native según la [documentación oficial](https://reactnative.dev/docs/environment-setup) (Android: JDK + SDK; iOS en macOS: Xcode + CocoaPods).
+2. Primera vez en iOS: `cd ios && pod install && cd ..`.
+3. Metro: `pnpm start`.
+4. Run: `pnpm android` o `pnpm ios`.
+
+**Recorrido mínimo para validar UX:** paso 1 (intro) → paso 2 (carrusel de cards del mock, indicadores tipo _pagination dots_, selección) → paso 3 (`StatusCard` + acciones que cambian el estado respetando transiciones permitidas). Volver atrás y comprobar que la tarjeta elegida se mantiene.
+
+### Enunciado → implementación (trazabilidad)
+
+| Requisito del challenge                                        | Dónde está en el repo                                                                                  |
+| -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| Flujo stepper, **más de 2 pasos**                              | `src/features/stepperFlow/types.ts` (`STEPPER_MAX_STEP`), `StepRenderer.tsx`, `NavigationControls.tsx` |
+| **Context** que gobierna el render del stepper                 | `src/features/stepperFlow/context/StepperContext.tsx`, `src/features/stepperFlow/hooks/useStepper.ts`  |
+| **Card** en el paso final con **estilos distintos por estado** | `src/features/stepperFlow/components/StatusCard.tsx`, `src/components/ui/Badge.tsx`                    |
+| **Lógica** para cambiar estados de la card y **navegar** pasos | Reducer (`UPDATE_CARD_STATUS`, transiciones) + `CardStatusActions.tsx` + controles de navegación       |
+| **Mock JSON** como fuente de datos                             | `src/services/mockData.json` (consumido desde `AppRoot.tsx`)                                           |
+| **i18n**                                                       | `src/app/i18n/` (`resources/es.json`, `en.json`, contract test en `__tests__/resources.test.ts`)       |
+| **Stylesheet**                                                 | `StyleSheet.create` en pantallas/componentes; tokens en `src/components/ui/theme.ts`                   |
+
+### Orden sugerido de lectura del código
+
+1. `src/features/stepperFlow/types.ts` — modelo de estado, acciones y matriz `CARD_STATUS_TRANSITIONS`.
+2. `src/features/stepperFlow/context/StepperContext.tsx` — `useReducer` y comportamiento por acción.
+3. `src/app/AppRoot.tsx` — composición del flujo, carrusel del paso 2 y wiring con el contexto.
+4. `src/features/stepperFlow/components/StepRenderer.tsx` — qué se renderiza en cada paso.
+5. Tests representativos: `src/features/stepperFlow/__tests__/stepperReducer.test.ts` y `src/app/__tests__/AppRoot.test.tsx`.
+
+### Qué mirar si el tiempo es muy acotado
+
+- Un solo archivo de negocio: `types.ts` + `StepperContext.tsx` (estado y reglas).
+- Un solo archivo de integración: `AppRoot.test.tsx` (navegación, picker, sincronización con el carrusel).
+- Un componente de UI del requisito final: `CardStatusActions.tsx` junto a `StatusCard.tsx`.
+
+---
+
+Aplicación móvil en React Native que resuelve el desafío técnico **"Stepper + Card con Estados"**: un flujo informativo de varios pasos que termina en una tarjeta capaz de reflejar y alternar los estados _habilitado_, _deshabilitado_, _pausado_ y _despausado_.
 
 **Autoría:** Max Santana — [maxsantana.dev@gmail.com](mailto:maxsantana.dev@gmail.com).
 
@@ -8,6 +58,7 @@ Aplicación móvil en React Native que resuelve el desafío técnico **"Stepper 
 
 ## Tabla de contenidos
 
+- [Onboarding para evaluación del challenge](#onboarding-para-evaluación-del-challenge)
 - [Resumen funcional](#resumen-funcional)
 - [Stack y dependencias](#stack-y-dependencias)
 - [Decisiones de arquitectura](#decisiones-de-arquitectura)
@@ -35,16 +86,16 @@ El stepper expone navegación adelante/atrás, deshabilita "Continuar" si no hay
 
 ## Stack y dependencias
 
-| Capa | Elección | Por qué |
-|---|---|---|
-| Runtime móvil | **React Native 0.85** + **React 19** | Última generación estable; el código adopta los patrones nuevos de React 19 (`use()`, `<Context value=...>`). |
-| Lenguaje | **TypeScript 5.8 estricto** | Sin `any` en el código de producción; *discriminated unions* para los estados de la card. |
-| Manejo de estado | **React Context + `useReducer`** | El desafío lo pide explícitamente. Suficiente para un flujo aislado; evita traer una librería extra. |
-| Internacionalización | **`i18next` + `react-i18next`** | Estándar de la industria; permite *namespaces* por dominio y *interpolación*. |
-| Estilos | **`StyleSheet.create` + design tokens** (`src/components/ui/theme.ts`) | El desafío pide *Stylesheet*; los tokens centralizados habilitan futuras migraciones a un theme provider o a NativeWind sin tocar componentes. |
-| Linter / Formatter | **Biome JS** (en lugar de ESLint+Prettier) | Una sola herramienta, rápida, con configuración mínima. |
-| Testing | **Jest** + **react-test-renderer** + preset de RN | TDD del reducer y tests de integración del flujo completo. |
-| Package manager | **pnpm** (Node ≥ 22.11) | Velocidad y `node-linker=hoisted` para compatibilidad RN. |
+| Capa                 | Elección                                                               | Por qué                                                                                                                                        |
+| -------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Runtime móvil        | **React Native 0.85** + **React 19**                                   | Última generación estable; el código adopta los patrones nuevos de React 19 (`use()`, `<Context value=...>`).                                  |
+| Lenguaje             | **TypeScript 5.8 estricto**                                            | Sin `any` en el código de producción; _discriminated unions_ para los estados de la card.                                                      |
+| Manejo de estado     | **React Context + `useReducer`**                                       | El desafío lo pide explícitamente. Suficiente para un flujo aislado; evita traer una librería extra.                                           |
+| Internacionalización | **`i18next` + `react-i18next`**                                        | Estándar de la industria; permite _namespaces_ por dominio y _interpolación_.                                                                  |
+| Estilos              | **`StyleSheet.create` + design tokens** (`src/components/ui/theme.ts`) | El desafío pide _Stylesheet_; los tokens centralizados habilitan futuras migraciones a un theme provider o a NativeWind sin tocar componentes. |
+| Linter / Formatter   | **Biome JS** (en lugar de ESLint+Prettier)                             | Una sola herramienta, rápida, con configuración mínima.                                                                                        |
+| Testing              | **Jest** + **react-test-renderer** + preset de RN                      | TDD del reducer y tests de integración del flujo completo.                                                                                     |
+| Package manager      | **pnpm** (Node ≥ 22.11)                                                | Velocidad y `node-linker=hoisted` para compatibilidad RN.                                                                                      |
 
 ## Decisiones de arquitectura
 
@@ -61,7 +112,7 @@ Esto deja claro qué se puede romper sin afectar a otras features y facilita mov
 
 ### Context con `useReducer`, sin prop-drilling
 
-`StepperContext` expone un único `value = { state, dispatch }` y un hook `useStepper()` que envuelve los `dispatch` en *callbacks memoizados* (`next`, `back`, `selectCard`, `updateCardStatus`, `setLoading`, `setError`). Los componentes nunca importan `dispatch` directamente, lo que permite refactorear la implementación interna del store sin tocar la UI.
+`StepperContext` expone un único `value = { state, dispatch }` y un hook `useStepper()` que envuelve los `dispatch` en _callbacks memoizados_ (`next`, `back`, `selectCard`, `updateCardStatus`, `setLoading`, `setError`). Los componentes nunca importan `dispatch` directamente, lo que permite refactorear la implementación interna del store sin tocar la UI.
 
 ### React 19 puro
 
@@ -81,7 +132,7 @@ Cualquier cambio de regla de negocio se hace en un solo archivo.
 
 ### Render dinámico del stepper
 
-`StepRenderer` lee `currentStep` del context y elige qué panel mostrar (intro / detalle / status). Esto cumple el requisito *"Context para manejar el render del stepper"* sin acoplar los componentes hijos al estado del stepper.
+`StepRenderer` lee `currentStep` del context y elige qué panel mostrar (intro / detalle / status). Esto cumple el requisito _"Context para manejar el render del stepper"_ sin acoplar los componentes hijos al estado del stepper.
 
 ## Estructura del proyecto
 
@@ -136,20 +187,20 @@ src/
 ## Máquina de estados de la card
 
 | Estado actual | Transiciones permitidas |
-|---|---|
-| `enabled`   | `paused`, `disabled` |
-| `disabled`  | `enabled` |
-| `paused`    | `unpaused`, `disabled` |
-| `unpaused`  | `paused`, `disabled` |
+| ------------- | ----------------------- |
+| `enabled`     | `paused`, `disabled`    |
+| `disabled`    | `enabled`               |
+| `paused`      | `unpaused`, `disabled`  |
+| `unpaused`    | `paused`, `disabled`    |
 
 `UPDATE_CARD_STATUS` es **idempotente** ante una transición inválida: el reducer devuelve la misma referencia de estado y la UI deshabilita el botón correspondiente con un `accessibilityHint` explicativo, así que el usuario nunca puede llegar a un estado prohibido.
 
 ## Internacionalización (i18n)
 
-- Español (`es`) es el idioma por defecto y *fallback*.
+- Español (`es`) es el idioma por defecto y _fallback_.
 - Las claves están agrupadas por dominio: `common.*`, `home.*`, `stepper.*`, `card.*`, `a11y.*`.
-- Todo texto visible y todo `accessibilityLabel` / `accessibilityHint` pasa por `t('namespace.key')`. No hay strings *hardcodeadas* en la UI.
-- Existe un *contract test* (`src/app/i18n/__tests__/resources.test.ts`) que falla la build si las claves de `es.json` y `en.json` divergen.
+- Todo texto visible y todo `accessibilityLabel` / `accessibilityHint` pasa por `t('namespace.key')`. No hay strings _hardcodeadas_ en la UI.
+- Existe un _contract test_ (`src/app/i18n/__tests__/resources.test.ts`) que falla la build si las claves de `es.json` y `en.json` divergen.
 
 Para agregar una nueva clave alcanza con sumarla en ambos archivos manteniendo la misma ruta.
 
@@ -166,49 +217,14 @@ Casos destacados:
 
 - `StepRenderer` se anuncia como `accessibilityLiveRegion="polite"` para que lectores de pantalla informen los cambios de paso.
 - `StepIndicator` usa `accessibilityRole="progressbar"` con `accessibilityValue={{ min, max, now }}`.
-- Los botones del toolbar `CardStatusActions` exponen un *hint* distinto cuando la transición no está permitida.
-
-## Setup y prerrequisitos
-
-### Prerrequisitos
-
-- **Node.js** ≥ 22.11
-- **pnpm** ≥ 9
-- Entorno React Native: ver la [guía oficial de RN](https://reactnative.dev/docs/environment-setup).
-  - **Android:** JDK 17, Android SDK con build-tools y emulador o dispositivo físico.
-  - **iOS** *(macOS)*: Xcode + CocoaPods.
-
-### Instalación
-
-```sh
-pnpm install
-```
-
-En iOS hay que instalar pods la primera vez:
-
-```sh
-cd ios && pod install && cd ..
-```
-
-## Scripts disponibles
-
-| Comando | Qué hace |
-|---|---|
-| `pnpm start` | Levanta Metro Bundler. |
-| `pnpm android` | Compila e instala en un emulador/dispositivo Android. |
-| `pnpm ios` | Compila e instala en un simulador iOS. |
-| `pnpm test` | Corre toda la suite de Jest (97 tests). |
-| `pnpm check` | Lint + format con Biome (sin escribir). |
-| `pnpm check:fix` | Lint + format con Biome aplicando arreglos seguros. |
-| `pnpm lint` / `pnpm lint:fix` | Alias del check anterior. |
-| `pnpm format` | Sólo formateo, escribiendo cambios. |
+- Los botones del toolbar `CardStatusActions` exponen un _hint_ distinto cuando la transición no está permitida.
 
 ## Estrategia de testing
 
-- **TDD del reducer** – `stepperReducer.test.ts` cubre cada `action`, los límites del paso, las transiciones válidas e inválidas y los *no-ops* (sin tarjeta seleccionada, transición prohibida).
+- **TDD del reducer** – `stepperReducer.test.ts` cubre cada `action`, los límites del paso, las transiciones válidas e inválidas y los _no-ops_ (sin tarjeta seleccionada, transición prohibida).
 - **Tests de componentes** – `StatusCard`, `StepIndicator`, `NavigationControls`, `CardStatusActions`, `StepRenderer`, etc., validan i18n, a11y y los estados visuales.
 - **Tests de integración** – `AppRoot.test.tsx` ejerce el flujo completo: navegación, selección de tarjeta vía botón y vía `onViewableItemsChanged`, persistencia entre pasos.
-- **Mock de `FlatList`** – `jest.setup.ts` reemplaza la `FlatList` virtualizada por un wrapper que renderiza todos los items, para que los tests no dependan del *windowing* y permanezcan deterministas.
+- **Mock de `FlatList`** – `jest.setup.ts` reemplaza la `FlatList` virtualizada por un wrapper que renderiza todos los items, para que los tests no dependan del _windowing_ y permanezcan deterministas.
 - **Contrato i18n** – test que falla si las claves de ES y EN divergen.
 
 Cobertura actual: 13 suites, 97 tests, 0 fallos.
@@ -217,7 +233,7 @@ Cobertura actual: 13 suites, 97 tests, 0 fallos.
 
 ### Agregar un estado nuevo a la card
 
-1. Sumarlo a `CardStatusKind` y al *discriminated union* `CardStatus` en `src/features/stepperFlow/types.ts`.
+1. Sumarlo a `CardStatusKind` y al _discriminated union_ `CardStatus` en `src/features/stepperFlow/types.ts`.
 2. Definir las transiciones en `CARD_STATUS_TRANSITIONS`.
 3. Agregar paleta en `Badge.tsx` (`STATUS_PALETTE`) y acento en `StatusCard.tsx` (`ACCENT_BY_STATUS`).
 4. Agregar copy en `card.statuses.*`, `card.actions.*` y `a11y.card.actionHint.*` en ambos JSON.
@@ -239,7 +255,3 @@ Editá `src/services/mockData.json`. El test `mockData.test.ts` valida tipos y e
 1. Crear `src/app/i18n/resources/<lang>.json` clonando la estructura de `es.json`.
 2. Registrarlo en `src/app/i18n/index.ts` dentro de `resources`.
 3. Verificar que el contract test sigue verde.
-
----
-
-**Autor:** Max Santana — challenge técnico
