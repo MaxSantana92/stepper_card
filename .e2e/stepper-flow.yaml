@@ -3,7 +3,7 @@
 # Prerrequisitos:
 # - Maestro CLI instalado: https://docs.maestro.dev/getting-started/installing-maestro
 # - App compilada e instalada en emulador/dispositivo (mismo applicationId que abajo).
-# - Idioma de la app: español (recursos por defecto en i18n).
+# - No depende de textos visibles: usa testID/id para ser robusto frente a i18n.
 #
 # Ejecutar desde la raíz del repo: pnpm test:e2e
 
@@ -11,18 +11,26 @@ appId: com.stepper_card
 ---
 - launchApp
 - extendedWaitUntil:
-    visible: 'Introducción'
+    visible:
+      id: "step-renderer-step-1"
     timeout: 60000
-- assertVisible: 'Te vamos a guiar en el detalle de tu producto financiero en pocos pasos.'
-- tapOn: 'Continuar'
-- assertVisible: 'Detalle'
-- assertVisible: 'Elegí una tarjeta para ver su estado'
+- assertVisible:
+    id: "navigation-controls-next"
+- tapOn:
+    id: "navigation-controls-next"
+- assertVisible:
+    id: "step-renderer-step-2"
+- assertVisible:
+    id: "app-root-card-picker"
+- assertVisible:
+    id: "app-root-card-dots"
 # La primera tarjeta del mock queda auto-seleccionada al entrar al paso 2.
-- tapOn: 'Continuar'
-# "Cambiar estado" y "Finalizar" solo existen en el paso 3 (el carrusel ya muestra StatusCard en el 2).
-- assertVisible: 'Cambiar estado'
-- assertVisible: 'Finalizar'
-- assertVisible: 'Visa Débito'
-- assertVisible: 'Terminada en 4582'
-- assertVisible: 'Saldo disponible'
-- assertVisible: 'Habilitada'
+- tapOn:
+    id: "navigation-controls-next"
+- assertVisible:
+    id: "step-renderer-step-3"
+# StatusCard + toolbar de acciones: existencia en el paso final sin depender del idioma.
+- assertVisible:
+    id: "step-renderer-status"
+- assertVisible:
+    id: "card-status-actions"
