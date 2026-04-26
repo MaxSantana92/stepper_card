@@ -6,6 +6,7 @@ import { Body, Subtitle } from '../../../components/ui/Typography';
 import { colors, elevation, radii, spacing } from '../../../components/ui/theme';
 import { useStepper } from '../hooks/useStepper';
 import { STEPPER_MAX_STEP, STEPPER_MIN_STEP } from '../types';
+import { CardStatusActions } from './CardStatusActions';
 import { StatusCard } from './StatusCard';
 
 interface StepRendererProps {
@@ -73,7 +74,10 @@ export const StepRenderer = ({ style }: StepRendererProps) => {
 
       {safeStep === STEPPER_MAX_STEP ? (
         selectedCard ? (
-          <StatusCard card={selectedCard} />
+          <View style={styles.statusBlock} testID="step-renderer-status">
+            <StatusCard card={selectedCard} />
+            <CardStatusActions />
+          </View>
         ) : (
           <View style={styles.panel} testID="step-renderer-status-fallback">
             <Subtitle>{t('stepper.steps.status')}</Subtitle>
@@ -97,5 +101,8 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     gap: spacing.sm,
     ...elevation.card,
+  },
+  statusBlock: {
+    gap: spacing.lg,
   },
 });

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { useStepperContext } from '../context';
-import type { FinancialCard } from '../types';
+import type { CardStatus, FinancialCard } from '../types';
 
 export interface UseStepperResult {
   currentStep: number;
@@ -11,6 +11,7 @@ export interface UseStepperResult {
   next: () => void;
   back: () => void;
   selectCard: (card: FinancialCard) => void;
+  updateCardStatus: (status: CardStatus) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 }
@@ -29,6 +30,13 @@ export const useStepper = (): UseStepperResult => {
   const selectCard = useCallback(
     (card: FinancialCard) => {
       dispatch({ type: 'SET_CARD', payload: card });
+    },
+    [dispatch],
+  );
+
+  const updateCardStatus = useCallback(
+    (status: CardStatus) => {
+      dispatch({ type: 'UPDATE_CARD_STATUS', payload: status });
     },
     [dispatch],
   );
@@ -56,9 +64,10 @@ export const useStepper = (): UseStepperResult => {
       next,
       back,
       selectCard,
+      updateCardStatus,
       setLoading,
       setError,
     }),
-    [state, next, back, selectCard, setLoading, setError],
+    [state, next, back, selectCard, updateCardStatus, setLoading, setError],
   );
 };

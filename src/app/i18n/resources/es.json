@@ -3,7 +3,8 @@
     "appTitle": "Stepper Card"
   },
   "home": {
-    "readyToStart": "Listo para empezar a desarrollar."
+    "readyToStart": "Listo para empezar a desarrollar.",
+    "flowIntro": "Recorré los pasos para revisar el estado de tus tarjetas."
   },
   "stepper": {
     "navigation": {
@@ -24,7 +25,8 @@
       "description": "Te vamos a guiar en el detalle de tu producto financiero en pocos pasos."
     },
     "details": {
-      "description": "Repasá la información asociada a tu tarjeta antes de ver su estado final."
+      "description": "Repasá la información asociada a tu tarjeta antes de ver su estado final.",
+      "cardPickerTitle": "Elegí una tarjeta para ver su estado"
     },
     "status": {
       "fallback": "Todavía no se seleccionó una tarjeta para mostrar su estado."
@@ -43,9 +45,16 @@
       "paused": "Pausada",
       "unpaused": "Reactivada"
     },
+    "actions": {
+      "title": "Cambiar estado",
+      "enabled": "Habilitar",
+      "disabled": "Deshabilitar",
+      "paused": "Pausar",
+      "unpaused": "Despausar"
+    },
     "types": {
       "VISA_DEBIT": "Visa Débito",
-      "MASTERCARD_CREDIT": "Mastercard Crédito",
+      "MASTERCARD_CREDIT": "Mastercard",
       "VISA_PLATINUM": "Visa Platinum",
       "VISA_SIGNATURE": "Visa Signature"
     }
@@ -63,12 +72,23 @@
       "indicatorHint": "Indica el avance del usuario en el flujo",
       "viewLabel": "Vista del paso {{step}}",
       "stepAnnouncement": "Paso {{current}} de {{total}}: {{name}}",
-      "controlsLabel": "Controles de navegación del flujo"
+      "controlsLabel": "Controles de navegación del flujo",
+      "cardPickerLabel": "Lista de tarjetas para seleccionar",
+      "selectCardHint": "Seleccioná esta tarjeta para continuar al estado final",
+      "cardCarouselHint": "Deslizá lateralmente o tocá una tarjeta para seleccionarla"
     },
     "card": {
       "summary": "Tarjeta {{type}} terminada en {{lastFour}}, estado {{status}}",
       "balanceHint": "Saldo disponible en pesos",
-      "statusBadgeHint": "Estado actual de la tarjeta"
+      "statusBadgeHint": "Estado actual de la tarjeta",
+      "actionsLabel": "Acciones para cambiar el estado de la tarjeta",
+      "actionHint": {
+        "enabled": "Vuelve a habilitar la tarjeta",
+        "disabled": "Bloquea la tarjeta para futuras operaciones",
+        "paused": "Pausa la tarjeta de forma temporal",
+        "unpaused": "Reactiva la tarjeta luego de una pausa"
+      },
+      "actionDisabledHint": "Esta transición no está disponible desde el estado actual"
     }
   }
 }

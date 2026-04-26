@@ -23,46 +23,62 @@
 
 ## Phase 2: Logic & State (TDD)
 
-- [ ] **Task 2.1: Stepper Reducer & Context**
+- [x] **Task 2.1: Stepper Reducer & Context**
   - Branch: `feat/stepper-logic`
-  - Action: Implement `stepperReducer.test.ts`, `types.ts`, and `StepperContext.tsx` using React 19 standards (`use()`, no Provider wrapper). Run checks and stop.
-- [ ] **Task 2.2: i18n Integration**
+  - Action: Implement `stepperReducer.test.ts`, `types.ts`, and `StepperContext.tsx` using React 19 standards (`use()`, no Provider wrapper).
+- [x] **Task 2.2: i18n Integration**
   - Branch: `feat/i18n-setup`
-  - Action: Configure `react-i18next` with ES/EN dictionaries in `src/app/i18n.ts`. Run checks and stop.
+  - Action: Configure `react-i18next` with ES/EN dictionaries in `src/app/i18n/index.ts` and resource files. Contract test in place.
 
 ## Phase 3: UI Components (Shadcn Style)
 
-- [ ] **Task 3.1: Atomic Components**
+- [x] **Task 3.1: Atomic Components**
   - Branch: `feat/ui-atoms`
-  - Action: Implement `Typography.tsx`, `Button.tsx`, and `Badge.tsx` in `src/components/ui/`. Run checks and stop.
-- [ ] **Task 3.2: Status Card & Stepper UI**
+  - Action: Implement `Typography.tsx`, `Button.tsx`, and `Badge.tsx` in `src/components/ui/` with shared design tokens in `theme.ts`.
+- [x] **Task 3.2: Status Card & Stepper UI**
   - Branch: `feat/ui-features`
-  - Action: Implement `StatusCard.tsx` (consuming mockData) and `StepIndicator.tsx`. Run checks and stop.
+  - Action: Implement `StatusCard.tsx` (consuming mockData) and `StepIndicator.tsx`.
 
 ## Phase 4: Final Integration & Cleanup
 
 - [x] **Task 4.1: Feature Orchestration (`StepRenderer`)**
   - Branch: `feat/step-renderer`
-  - Action: Create `StepRenderer.tsx` to handle dynamic views based on `currentStep`. Run checks and stop.
-- [x] **Task 4.2: Navigation Controls**
-  - Branch: `feat/navigation-controls`
-  - Action: Implement `NavigationControls.tsx` with edge-case logic (disabled states). Run checks and stop.
-- [ ] **Task 4.3: Accessibility (a11y) Audit**
-  - Branch: `feat/a11y-audit`
-  - Action: Add `accessibilityRole`, `accessibilityLabel` (i18n), and states to all interactive elements. Run checks and stop.
-
-## Phase 4: Final Integration & Cleanup
-
-- [x] **Task 4.1: Feature Orchestration (`StepRenderer`)**
-  - Branch: `feat/step-renderer`
-  - Action: Create `src/features/stepperFlow/components/StepRenderer.tsx`. This component must consume `useStepper()` (React 19 style) and dynamically render Step 1, Step 2, or the `StatusCard` (Step 3) based on `currentStep`.
+  - Action: `src/features/stepperFlow/components/StepRenderer.tsx` consumes `useStepper()` (React 19 style) and dynamically renders Step 1, Step 2, or the `StatusCard` (Step 3) based on `currentStep`.
 - [x] **Task 4.2: Navigation Controls & Edge Cases**
   - Branch: `feat/navigation-controls`
-  - Action: Implement `NavigationControls.tsx` (Next/Back buttons).
-  - Rules: Disable "Next" if loading or if no card is selected in Step 2. Handle the final state gracefully.
-- [ ] **Task 4.3: Accessibility (a11y) & UX Polish**
+  - Action: `NavigationControls.tsx` with Next/Back buttons. "Next" is disabled while loading, when no card is selected on Step 2, and is replaced by "Finish" on the last step.
+- [x] **Task 4.3: Accessibility (a11y) & UX Polish**
   - Branch: `feat/a11y-audit`
-  - Action: Ensure all interactive elements have `accessibilityRole`, `accessibilityLabel` (using i18n), and `accessibilityState={ { disabled: true } }` where applicable. Screen readers must logically announce step transitions.
-- [ ] **Task 4.4: Main Injection & Code Quality**
+  - Action: All interactive elements expose `accessibilityRole`, `accessibilityLabel` (i18n) and `accessibilityState` where applicable. `StepRenderer` is a polite live region so transitions are announced.
+- [x] **Task 4.4: Main Injection & Code Quality**
   - Branch: `feat/final-cleanup`
-  - Action: Inject the completed `stepperFlow` into `src/app/AppRoot.tsx`. Run a final `pnpm check --write` and `pnpm test` to ensure 100% integration. Remove any unused imports or mock leftovers.
+  - Action: Inject `stepperFlow` into `src/app/AppRoot.tsx`. Run `pnpm check --write` and `pnpm test` to ensure full integration. No unused imports or mock leftovers.
+
+## Phase 5: Challenge Closure
+
+- [x] **Task 5.1: Card Status Lifecycle**
+  - Branch: `feat/final-cleanup`
+  - Action: Add `UPDATE_CARD_STATUS` reducer action with the `CARD_STATUS_TRANSITIONS` matrix and `isValidCardStatusTransition` helper. Expose `updateCardStatus` from `useStepper`. Implement `CardStatusActions.tsx` toolbar in step 3 (one button per non-current state, disabled when the transition is forbidden, with translated `accessibilityHint`s).
+  - Coverage: dedicated reducer cases, full transition matrix table-test, component test for selection / disabled buttons / dispatch.
+- [x] **Task 5.2: Test Suite Stabilisation**
+  - Branch: `feat/final-cleanup`
+  - Action: Mock `FlatList` in `jest.setup.ts` via a `Proxy` over the public `react-native` module so virtualisation never strips off-screen items in tests. Refine `findCardOptions` in `AppRoot.test.tsx` to target only the interactive `Pressable` instances (filter by `typeof onPress === 'function'`).
+  - Result: `Tests: 97 passed, 13 suites`.
+- [x] **Task 5.3: Documentation Refresh**
+  - Branch: `feat/final-cleanup`
+  - Action: Rewrite `README.md` with stack rationale, FSD structure, flow diagram, status machine, i18n contract, scripts, testing strategy and extension guide. Update this plan to reflect the actual state.
+
+---
+
+## Done state checklist (against the original challenge)
+
+- [x] Multi-step informative stepper (>2 steps) – 3 steps.
+- [x] Card component on the final step – `StatusCard`.
+- [x] Stepper styling and four card states – `StepIndicator`, `Badge`, `ACCENT_BY_STATUS`.
+- [x] Context handles stepper rendering – `StepperContext` + `StepRenderer`.
+- [x] Mock JSON for the card data – `src/services/mockData.json`.
+- [x] Internationalization – `react-i18next` with ES/EN parity test.
+- [x] Stylesheet usage – `StyleSheet.create` everywhere with shared `theme.ts` tokens.
+- [x] Logic to switch between card states – `UPDATE_CARD_STATUS` + `CardStatusActions`.
+- [x] Step navigation logic – `NavigationControls` with edge cases.
+- [x] README with setup and technical decisions.

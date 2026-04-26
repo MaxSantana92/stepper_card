@@ -2,6 +2,7 @@
   "name": "stepper_card",
   "version": "0.0.1",
   "private": true,
+  "author": "Max Santana <maxsantana.dev@gmail.com>",
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
