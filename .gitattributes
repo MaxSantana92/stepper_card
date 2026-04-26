@@ -1,0 +1,2 @@
+# Obliga a Git a usar siempre LF (Unix) al hacer commits y checkouts
+* text=auto eol=lf

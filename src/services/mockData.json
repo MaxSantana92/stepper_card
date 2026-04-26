@@ -1,0 +1,40 @@
+{
+  "cards": [
+    {
+      "id": "v-1234",
+      "type": "VISA_DEBIT",
+      "lastFour": "4582",
+      "holderName": "MAX SANTANA",
+      "status": { "kind": "enabled" },
+      "balance": 150500.25,
+      "expiryDate": "12/28"
+    },
+    {
+      "id": "m-5678",
+      "type": "MASTERCARD_CREDIT",
+      "lastFour": "9012",
+      "holderName": "MAX SANTANA",
+      "status": { "kind": "disabled", "reason": "blocked_by_user" },
+      "balance": 450000.0,
+      "expiryDate": "05/27"
+    },
+    {
+      "id": "v-9012",
+      "type": "VISA_PLATINUM",
+      "lastFour": "1122",
+      "holderName": "MAX SANTANA",
+      "status": { "kind": "paused", "pausedAt": "2026-03-10T12:00:00Z" },
+      "balance": 0.0,
+      "expiryDate": "08/29"
+    },
+    {
+      "id": "v-3344",
+      "type": "VISA_SIGNATURE",
+      "lastFour": "8899",
+      "holderName": "MAX SANTANA",
+      "status": { "kind": "unpaused", "resumedAt": "2026-04-01T09:30:00Z" },
+      "balance": 12500.5,
+      "expiryDate": "01/30"
+    }
+  ]
+}

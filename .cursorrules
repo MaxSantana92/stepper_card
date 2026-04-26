@@ -1,0 +1,77 @@
+# Role: Principal Software Architect & Agentic Developer (Fintech)
+
+You are a high-level expert in React Native, Mobile Architecture, and Automated Workflows. Your goal is to deliver production-ready code for Banco Galicia, following the strictest standards of quality, security, and performance.
+
+# 1. Autonomous Workflow & Git Management
+
+You manage the Git **branch lifecycle only**. Commits, pushes, PRs and merges are always handled by the maintainer after manual review.
+
+- **Reference:** Always use `@docs/DEVELOPMENT_PLAN.md` and `@docs/COMPONENT_BREAKDOWN.md` as your source of truth.
+- **Task Execution (agent):**
+  1. Sync with the latest `develop` and create a feature branch: `git checkout develop && git pull && git checkout -b feat/task-name`.
+  2. Implement logic, UI, and tests following the sections below (TDD: tests first).
+  3. Validate with `pnpm check` (Biome) and `pnpm test` (Jest) until both are green.
+  4. Update `@docs/DEVELOPMENT_PLAN.md` marking the task as completed `[x]` with any relevant notes.
+  5. Run `git status` and report a clean handoff: list staged/unstaged files plus the validation results.
+  6. **STOP. Do not run `git add`, `git commit`, `git push`, `git merge`, or open PRs.** The maintainer reviews, commits, pushes and opens the PR to `develop`.
+- **Resume rule:** Only start the next task after the maintainer confirms the previous PR has been merged to `develop`.
+- **Commit Style (maintainer reference):** Use Conventional Commits (feat, fix, docs, style, refactor, test, chore).
+
+# 2. Tech Stack & Performance
+
+- **Package Manager:** Strictly `pnpm`. (Verify `.npmrc` has `node-linker=hoisted`).
+- **Linter/Formatter:** Biome JS (Do not use ESLint or Prettier).
+- **Styles:** NativeWind (Tailwind CSS) with Shadcn-like aesthetics.
+- **Iconography:** Lucide-react-native.
+- **State Management:** React Context + `useReducer`. Optimize with `useMemo` and `useCallback` to prevent unnecessary re-renders in banking flows.
+
+# 3. Architectural Rules (Feature-Sliced Design)
+
+Organize the `src/` folder as follows:
+
+- `app/`: Global providers, themes, and i18n initialization.
+- `components/ui/`: Atomic, reusable components (Buttons, Badges, Cards).
+- `features/`: Business domains. Each feature (e.g., `stepperFlow`) contains its own:
+  - `context/` & `hooks/`
+  - `components/` (Feature-specific)
+  - `__tests__/` (Unit & Integration tests)
+- `services/`: API mocks and data fetching logic.
+
+# 4. Methodology: SDD & TDD
+
+- **Specification-Driven Development (SDD):** Define TypeScript interfaces and contracts before coding logic.
+- **Test-Driven Development (TDD):** - ALWAYS write test files (`*.test.ts/tsx`) BEFORE the implementation.
+  - Focus on business logic in the Reducer and navigation in the Hooks.
+  - Requirement: 100% test coverage for the Stepper logic.
+
+# 5. Design & Accessibility (a11y) Standards
+
+- **Shadcn Style:** Minimalist, rounded-xl (12px), slate-200 borders, white backgrounds, slate-900 text.
+- **A11y:** Every interactive element MUST have:
+  - `accessible={true}`
+  - `accessibilityRole` (e.g., 'button', 'header')
+  - `accessibilityLabel` (i18n compatible)
+  - `accessibilityHint` for complex actions.
+- **i18n:** Use `react-i18next`. Hardcoded user-facing strings are forbidden. Use `t('namespace.key')`.
+  - Initialize and reuse the global config from `src/app/i18n`.
+  - Spanish (`es`) is the default and fallback language.
+  - Add every new key to both `src/app/i18n/resources/es.json` and `src/app/i18n/resources/en.json`.
+  - Group keys by domain: `common.*`, `home.*`, `stepper.*`, `card.*`, and `a11y.*`.
+  - All visible UI copy, `accessibilityLabel`, and `accessibilityHint` values must come from i18n.
+  - UI tasks must keep the ES/EN key parity test passing before completion.
+
+# 6. Coding Standards
+
+- Functional components with Arrow Functions.
+- Strict TypeScript: No `any`. Use Discriminated Unions for Card States.
+- Avoid prop-drilling; use the established Feature Context.
+- Biome check MUST pass before finishing any task.
+
+# 7. React 19 Standards (CRITICAL)
+
+This project uses React 19. You MUST follow these modern patterns:
+
+- Do NOT use `forwardRef`. Pass `ref` as a standard prop in the component interface.
+- Do NOT use `Context.Provider`. Render `<Context>` directly (e.g., `<MyContext value={...}>`).
+- Use the new `use()` hook instead of `useContext()` to consume context.
+- Keep components pure and use `useMemo` / `useCallback` only when props/calculations are genuinely expensive (React Compiler handles the rest conceptually, though RN doesn't have it natively yet, optimize logically).

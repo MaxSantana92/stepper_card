@@ -1,0 +1,99 @@
+{
+  "common": {
+    "appTitle": "Stepper Card"
+  },
+  "home": {
+    "readyToStart": "Listo para empezar a desarrollar.",
+    "flowIntro": "Recorré los pasos para revisar el estado de tus tarjetas.",
+    "languageSwitch": {
+      "en": "Cambiar a inglés",
+      "es": "Cambiar a español"
+    }
+  },
+  "stepper": {
+    "navigation": {
+      "back": "Volver",
+      "next": "Continuar",
+      "finish": "Finalizar"
+    },
+    "steps": {
+      "intro": "Introducción",
+      "details": "Detalle",
+      "status": "Estado de tarjeta"
+    },
+    "indicator": {
+      "label": "Progreso del flujo",
+      "progress": "Paso {{current}} de {{total}}"
+    },
+    "intro": {
+      "description": "Te vamos a guiar en el detalle de tu producto financiero en pocos pasos."
+    },
+    "details": {
+      "description": "Repasá la información asociada a tu tarjeta antes de ver su estado final.",
+      "cardPickerTitle": "Elegí una tarjeta para ver su estado"
+    },
+    "status": {
+      "fallback": "Todavía no se seleccionó una tarjeta para mostrar su estado."
+    }
+  },
+  "card": {
+    "labels": {
+      "balance": "Saldo disponible",
+      "expiryDate": "Vencimiento",
+      "holderName": "Titular",
+      "lastFour": "Terminada en"
+    },
+    "statuses": {
+      "disabled": "Deshabilitada",
+      "enabled": "Habilitada",
+      "paused": "Pausada",
+      "unpaused": "Reactivada"
+    },
+    "actions": {
+      "title": "Cambiar estado",
+      "enabled": "Habilitar",
+      "disabled": "Deshabilitar",
+      "paused": "Pausar",
+      "unpaused": "Despausar"
+    },
+    "types": {
+      "VISA_DEBIT": "Visa Débito",
+      "MASTERCARD_CREDIT": "Mastercard",
+      "VISA_PLATINUM": "Visa Platinum",
+      "VISA_SIGNATURE": "Visa Signature"
+    }
+  },
+  "a11y": {
+    "home": {
+      "subtitle": "Mensaje de estado inicial del proyecto",
+      "title": "Título de la aplicación",
+      "languageToggleHint": "Alterna el idioma de la aplicación"
+    },
+    "stepper": {
+      "backHint": "Vuelve al paso anterior",
+      "nextHint": "Avanza al siguiente paso",
+      "finishHint": "Cierra el flujo después de revisar el estado de tu tarjeta",
+      "nextDisabledHint": "Seleccioná una tarjeta para poder continuar",
+      "indicatorHint": "Indica el avance del usuario en el flujo",
+      "viewLabel": "Vista del paso {{step}}",
+      "stepAnnouncement": "Paso {{current}} de {{total}}: {{name}}",
+      "controlsLabel": "Controles de navegación del flujo",
+      "cardPickerLabel": "Lista de tarjetas para seleccionar",
+      "selectCardHint": "Seleccioná esta tarjeta para continuar al estado final",
+      "cardCarouselHint": "Deslizá lateralmente o tocá una tarjeta para seleccionarla"
+    },
+    "card": {
+      "summary": "Tarjeta {{type}} terminada en {{lastFour}}, estado {{status}}",
+      "balanceHint": "Saldo disponible en pesos",
+      "statusBadgeHint": "Estado actual de la tarjeta",
+      "actionsLabel": "Acciones para cambiar el estado de la tarjeta",
+      "actionHint": {
+        "enabled": "Vuelve a habilitar la tarjeta",
+        "disabled": "Bloquea la tarjeta para futuras operaciones",
+        "paused": "Pausa la tarjeta de forma temporal",
+        "unpaused": "Reactiva la tarjeta luego de una pausa"
+      },
+      "actionDisabledHint": "Esta transición no está disponible desde el estado actual"
+    }
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "common": {
+    "appTitle": "Stepper Card"
+  },
+  "home": {
+    "readyToStart": "Ready to start development.",
+    "flowIntro": "Walk through the steps to review your card's status.",
+    "languageSwitch": {
+      "en": "Switch to English",
+      "es": "Switch to Spanish"
+    }
+  },
+  "stepper": {
+    "navigation": {
+      "back": "Back",
+      "next": "Next",
+      "finish": "Finish"
+    },
+    "steps": {
+      "intro": "Introduction",
+      "details": "Details",
+      "status": "Card status"
+    },
+    "indicator": {
+      "label": "Flow progress",
+      "progress": "Step {{current}} of {{total}}"
+    },
+    "intro": {
+      "description": "We will walk you through the details of your financial product in a few steps."
+    },
+    "details": {
+      "description": "Review the information linked to your card before seeing its final status.",
+      "cardPickerTitle": "Pick a card to see its status"
+    },
+    "status": {
+      "fallback": "No card has been selected yet to show its status."
+    }
+  },
+  "card": {
+    "labels": {
+      "balance": "Available balance",
+      "expiryDate": "Expiry date",
+      "holderName": "Cardholder",
+      "lastFour": "Ending in"
+    },
+    "statuses": {
+      "disabled": "Disabled",
+      "enabled": "Enabled",
+      "paused": "Paused",
+      "unpaused": "Reactivated"
+    },
+    "actions": {
+      "title": "Change status",
+      "enabled": "Enable",
+      "disabled": "Disable",
+      "paused": "Pause",
+      "unpaused": "Unpause"
+    },
+    "types": {
+      "VISA_DEBIT": "Visa Debit",
+      "MASTERCARD_CREDIT": "Mastercard",
+      "VISA_PLATINUM": "Visa Platinum",
+      "VISA_SIGNATURE": "Visa Signature"
+    }
+  },
+  "a11y": {
+    "home": {
+      "subtitle": "Initial project status message",
+      "title": "Application title",
+      "languageToggleHint": "Toggles the application language"
+    },
+    "stepper": {
+      "backHint": "Returns to the previous step",
+      "nextHint": "Moves to the next step",
+      "finishHint": "Closes the flow after reviewing the card status",
+      "nextDisabledHint": "Select a card to continue",
+      "indicatorHint": "Shows user progress through the flow",
+      "viewLabel": "Step {{step}} view",
+      "stepAnnouncement": "Step {{current}} of {{total}}: {{name}}",
+      "controlsLabel": "Flow navigation controls",
+      "cardPickerLabel": "List of cards to choose from",
+      "selectCardHint": "Select this card to continue to the final status",
+      "cardCarouselHint": "Swipe sideways or tap a card to select it"
+    },
+    "card": {
+      "summary": "{{type}} card ending in {{lastFour}}, status {{status}}",
+      "balanceHint": "Available balance in pesos",
+      "statusBadgeHint": "Current card status",
+      "actionsLabel": "Actions to change the card status",
+      "actionHint": {
+        "enabled": "Re-enables the card",
+        "disabled": "Blocks the card for any future operation",
+        "paused": "Temporarily pauses the card",
+        "unpaused": "Reactivates the card after a pause"
+      },
+      "actionDisabledHint": "This transition is not available from the current status"
+    }
+  }
+}
