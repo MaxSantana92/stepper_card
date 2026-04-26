@@ -14,6 +14,7 @@ import {
   type ViewToken,
 } from 'react-native';
 
+import { Button } from '../components/ui/Button';
 import { Body, Heading, Subtitle } from '../components/ui/Typography';
 import { colors, radii, spacing } from '../components/ui/theme';
 import {
@@ -186,7 +187,15 @@ const StepperFlowScreen = () => {
 };
 
 export const AppRoot = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const isSpanish = i18n.resolvedLanguage?.startsWith('es') ?? i18n.language.startsWith('es');
+  const nextLanguage = isSpanish ? 'en' : 'es';
+  const switchLanguageLabel = t(`home.languageSwitch.${nextLanguage}`);
+
+  const handleLanguageToggle = useCallback(() => {
+    void i18n.changeLanguage(nextLanguage);
+  }, [i18n, nextLanguage]);
 
   return (
     <AppProviders>
@@ -198,6 +207,18 @@ export const AppRoot = () => {
             <Body accessibilityLabel={t('a11y.home.subtitle')} color={colors.textSecondary}>
               {t('home.flowIntro')}
             </Body>
+            <View style={styles.languageAction}>
+              <Button
+                accessibilityHint={t('a11y.home.languageToggleHint')}
+                accessibilityLabel={switchLanguageLabel}
+                onPress={handleLanguageToggle}
+                size="sm"
+                testID="language-toggle-button"
+                variant="ghost"
+              >
+                {switchLanguageLabel}
+              </Button>
+            </View>
           </View>
 
           <StepperFlowScreen />
@@ -221,6 +242,9 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
     paddingHorizontal: spacing.xs,
     borderRadius: radii.lg,
+  },
+  languageAction: {
+    alignSelf: 'flex-start',
   },
   flowBlock: {
     gap: spacing.lg,

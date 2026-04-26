@@ -12,7 +12,8 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "maestro test .e2e/"
   },
   "dependencies": {
     "i18next": "^26.0.8",

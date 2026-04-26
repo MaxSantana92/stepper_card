@@ -4,7 +4,11 @@
   },
   "home": {
     "readyToStart": "Listo para empezar a desarrollar.",
-    "flowIntro": "Recorré los pasos para revisar el estado de tus tarjetas."
+    "flowIntro": "Recorré los pasos para revisar el estado de tus tarjetas.",
+    "languageSwitch": {
+      "en": "Cambiar a inglés",
+      "es": "Cambiar a español"
+    }
   },
   "stepper": {
     "navigation": {
@@ -62,7 +66,8 @@
   "a11y": {
     "home": {
       "subtitle": "Mensaje de estado inicial del proyecto",
-      "title": "Título de la aplicación"
+      "title": "Título de la aplicación",
+      "languageToggleHint": "Alterna el idioma de la aplicación"
     },
     "stepper": {
       "backHint": "Vuelve al paso anterior",

@@ -1,0 +1,28 @@
+# E2E — Happy path del stepper (Maestro)
+#
+# Prerrequisitos:
+# - Maestro CLI instalado: https://docs.maestro.dev/getting-started/installing-maestro
+# - App compilada e instalada en emulador/dispositivo (mismo applicationId que abajo).
+# - Idioma de la app: español (recursos por defecto en i18n).
+#
+# Ejecutar desde la raíz del repo: pnpm test:e2e
+
+appId: com.stepper_card
+---
+- launchApp
+- extendedWaitUntil:
+    visible: 'Introducción'
+    timeout: 60000
+- assertVisible: 'Te vamos a guiar en el detalle de tu producto financiero en pocos pasos.'
+- tapOn: 'Continuar'
+- assertVisible: 'Detalle'
+- assertVisible: 'Elegí una tarjeta para ver su estado'
+# La primera tarjeta del mock queda auto-seleccionada al entrar al paso 2.
+- tapOn: 'Continuar'
+# "Cambiar estado" y "Finalizar" solo existen en el paso 3 (el carrusel ya muestra StatusCard en el 2).
+- assertVisible: 'Cambiar estado'
+- assertVisible: 'Finalizar'
+- assertVisible: 'Visa Débito'
+- assertVisible: 'Terminada en 4582'
+- assertVisible: 'Saldo disponible'
+- assertVisible: 'Habilitada'
