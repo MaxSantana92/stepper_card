@@ -1,7 +1,10 @@
 import { stepperReducer } from '../context/StepperContext';
 import {
+  CARD_STATUS_TRANSITIONS,
+  type CardStatusKind,
   type FinancialCard,
   initialStepperState,
+  isValidCardStatusTransition,
   STEPPER_MAX_STEP,
   STEPPER_MIN_STEP,
 } from '../types';
@@ -91,6 +94,79 @@ describe('stepperReducer', () => {
       });
 
       expect(next.error).toBe('network');
+    });
+  });
+
+  describe('UPDATE_CARD_STATUS', () => {
+    const stateWithCard = {
+      ...initialStepperState,
+      selectedCard: sampleCard,
+    };
+
+    it('updates only the status of the selected card on a valid transition', () => {
+      const next = stepperReducer(stateWithCard, {
+        type: 'UPDATE_CARD_STATUS',
+        payload: { kind: 'paused', pausedAt: '2026-04-26T12:00:00Z' },
+      });
+
+      expect(next.selectedCard?.status).toEqual({
+        kind: 'paused',
+        pausedAt: '2026-04-26T12:00:00Z',
+      });
+      expect(next.selectedCard?.id).toBe(sampleCard.id);
+      expect(next.selectedCard?.balance).toBe(sampleCard.balance);
+      expect(next.selectedCard?.holderName).toBe(sampleCard.holderName);
+    });
+
+    it('returns the same reference when the transition is invalid', () => {
+      const stateDisabled = {
+        ...stateWithCard,
+        selectedCard: { ...sampleCard, status: { kind: 'disabled' } as const },
+      };
+
+      const next = stepperReducer(stateDisabled, {
+        type: 'UPDATE_CARD_STATUS',
+        payload: { kind: 'paused' },
+      });
+
+      expect(next).toBe(stateDisabled);
+    });
+
+    it('is a no-op when there is no selected card', () => {
+      const next = stepperReducer(initialStepperState, {
+        type: 'UPDATE_CARD_STATUS',
+        payload: { kind: 'enabled' },
+      });
+
+      expect(next).toBe(initialStepperState);
+    });
+
+    it.each<[CardStatusKind, CardStatusKind, boolean]>([
+      ['enabled', 'paused', true],
+      ['enabled', 'disabled', true],
+      ['enabled', 'unpaused', false],
+      ['disabled', 'enabled', true],
+      ['disabled', 'paused', false],
+      ['disabled', 'disabled', false],
+      ['paused', 'unpaused', true],
+      ['paused', 'disabled', true],
+      ['paused', 'enabled', false],
+      ['unpaused', 'paused', true],
+      ['unpaused', 'disabled', true],
+      ['unpaused', 'enabled', false],
+    ])('validates the transition matrix for %s → %s as %s', (from, to, expected) => {
+      expect(isValidCardStatusTransition(from, to)).toBe(expected);
+    });
+
+    it('exposes a transition table consistent with the validator helper', () => {
+      const kinds: readonly CardStatusKind[] = ['enabled', 'disabled', 'paused', 'unpaused'];
+
+      for (const from of kinds) {
+        for (const to of kinds) {
+          const expected = CARD_STATUS_TRANSITIONS[from].includes(to);
+          expect(isValidCardStatusTransition(from, to)).toBe(expected);
+        }
+      }
     });
   });
 });

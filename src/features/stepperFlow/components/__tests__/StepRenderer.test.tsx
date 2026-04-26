@@ -69,6 +69,20 @@ describe('StepRenderer', () => {
     );
   });
 
+  it('mounts the CardStatusActions toolbar alongside the StatusCard on the final step', async () => {
+    const component = await renderRenderer({
+      currentStep: STEPPER_MAX_STEP,
+      selectedCard: sampleCard,
+    });
+
+    const toolbar = component?.root.findAll(
+      (node) =>
+        node.props.testID === 'card-status-actions' && node.props.accessibilityRole === 'toolbar',
+    )?.[0];
+
+    expect(toolbar).toBeDefined();
+  });
+
   it('renders a fallback message on the final step when no card has been selected', async () => {
     const component = await renderRenderer({
       currentStep: STEPPER_MAX_STEP,

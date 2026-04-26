@@ -2,6 +2,7 @@ import { createContext, type Dispatch, type ReactNode, use, useMemo, useReducer 
 
 import {
   initialStepperState,
+  isValidCardStatusTransition,
   STEPPER_MAX_STEP,
   STEPPER_MIN_STEP,
   type StepperAction,
@@ -25,6 +26,23 @@ export const stepperReducer = (state: StepperState, action: StepperAction): Step
         ...state,
         selectedCard: action.payload,
       };
+    case 'UPDATE_CARD_STATUS': {
+      // Guard: ignore the action if there is no selected card or if the
+      // requested transition is not allowed by the lifecycle rules.
+      if (state.selectedCard === null) {
+        return state;
+      }
+      if (!isValidCardStatusTransition(state.selectedCard.status.kind, action.payload.kind)) {
+        return state;
+      }
+      return {
+        ...state,
+        selectedCard: {
+          ...state.selectedCard,
+          status: action.payload,
+        },
+      };
+    }
     case 'SET_LOADING':
       return {
         ...state,
