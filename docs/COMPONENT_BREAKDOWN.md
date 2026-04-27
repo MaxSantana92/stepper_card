@@ -40,6 +40,35 @@
 
 ---
 
+## Data layer (HTTP flow)
+
+This project runs as a demo without a real backend, but the UI uses a real HTTP pipeline:
+
+- `src/services/http/axiosClient.ts`
+  - `axios.create({ baseURL, timeout, headers })`
+  - response interceptor that normalizes errors into `AppHttpError` (`{ message, status? }`)
+- `src/services/api/cardsApi.ts`
+  - `axios-mock-adapter` intercepts `GET /v1/cards`
+  - returns `mockData.json` (200) or a simulated `networkError()` depending on `SIMULATE_CARDS_FETCH_FAILURE`
+- `src/services/mappers/mapCardsDto.ts`
+  - defensive mapper from `unknown` to `FinancialCard[]`
+
+The feature hook `src/features/stepperFlow/hooks/useCards.ts` is the consumer:
+
+- loads cards on mount
+- exposes `cards`, `isLoading`, `error`, `refetch()`
+- on failure: sets `error` and triggers a toast (`showErrorToast`)
+
+## Empty state (no cards)
+
+In Step 2 (`StepperFlowScreen`), the picker UI handles three states:
+
+- Loading with no data yet: shows `ActivityIndicator`.
+- Loaded with cards: shows the horizontal `FlatList` carousel + pagination dots.
+- Loaded with **no cards** (any reason): shows an empty-state message and a **Retry** action that calls `refetch()`.
+
+---
+
 ## Technical Tasks
 
 1. Initialize `StepperContext` using `useReducer` to manage `currentStep` and `cardData`.

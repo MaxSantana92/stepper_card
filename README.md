@@ -30,7 +30,7 @@ Si estos tres comandos están en verde, la base del challenge (tipos, reducer, i
 | **Context** que gobierna el render del stepper                 | `src/features/stepperFlow/context/StepperContext.tsx`, `src/features/stepperFlow/hooks/useStepper.ts`  |
 | **Card** en el paso final con **estilos distintos por estado** | `src/features/stepperFlow/components/StatusCard.tsx`, `src/components/ui/Badge.tsx`                    |
 | **Lógica** para cambiar estados de la card y **navegar** pasos | Reducer (`UPDATE_CARD_STATUS`, transiciones) + `CardStatusActions.tsx` + controles de navegación       |
-| **Mock JSON** como fuente de datos                             | `src/services/mockData.json` (consumido desde `AppRoot.tsx`)                                           |
+| **Mock JSON** como fuente de datos                             | `src/services/mockData.json` (servido por `src/services/api/cardsApi.ts` vía `axios-mock-adapter`)     |
 | **i18n**                                                       | `src/app/i18n/` (`resources/es.json`, `en.json`, contract test en `__tests__/resources.test.ts`)       |
 | **Stylesheet**                                                 | `StyleSheet.create` en pantallas/componentes; tokens en `src/components/ui/theme.ts`                   |
 
@@ -107,6 +107,7 @@ El stepper expone navegación adelante/atrás, deshabilita "Continuar" si no hay
 - **`src/components/ui/`** – átomos reutilizables (`Button`, `Badge`, `Typography`) más los design tokens.
 - **`src/features/<feature>/`** – dominios de negocio cerrados; cada uno tiene su `context/`, `hooks/`, `components/` y `__tests__/`.
 - **`src/services/`** – fuentes de datos (en este caso `mockData.json`).
+- **`src/services/`** – capa de datos: cliente HTTP (`axiosClient`), API (`cardsApi`), DTOs + mappers y mock con `axios-mock-adapter`.
 
 Esto deja claro qué se puede romper sin afectar a otras features y facilita mover `stepperFlow` a un paquete independiente más adelante.
 
@@ -164,8 +165,17 @@ src/
 │   ├── types.ts                    # State, Action, transiciones, constantes
 │   └── __tests__/stepperReducer.test.ts
 └── services/
+    ├── api/
+    │   └── cardsApi.ts             # GET /v1/cards (mockeado con axios-mock-adapter)
+    ├── http/
+    │   └── axiosClient.ts          # axios.create + interceptor de errores (AppHttpError)
+    ├── mappers/
+    │   └── mapCardsDto.ts          # unknown -> FinancialCard[]
+    ├── types/
+    │   └── cards.dto.ts            # contrato DTO del mock (CardsResponseDto)
+    ├── config.ts                   # baseURL, timeout, flag de simulación de error
     ├── mockData.json               # 4 tarjetas, una por estado
-    └── __tests__/mockData.test.ts
+    └── __tests__/...
 ```
 
 ## Flujo de la aplicación
@@ -183,6 +193,20 @@ src/
                     │   (useReducer) │         │  transición      │
                     └────────────────┘         └──────────────────┘
 ```
+
+### Flujo HTTP (demo sin backend real)
+
+No existe un backend real en este demo. Para simular un backend sin cambiar el código de UI:
+
+- `src/services/http/axiosClient.ts` crea un `axiosClient` con:
+  - `baseURL` (`API_BASE_URL`) y `timeout` (`API_TIMEOUT_MS`) desde `src/services/config.ts`.
+  - un interceptor de `response` que normaliza errores a `AppHttpError` (`{ message, status? }`).
+- `src/services/api/cardsApi.ts` registra un `axios-mock-adapter` **a nivel de módulo** que intercepta `GET /v1/cards` y responde con:
+  - `200` + `mockData.json`, o
+  - `networkError()` si `SIMULATE_CARDS_FETCH_FAILURE` está en `true`.
+- `src/services/mappers/mapCardsDto.ts` convierte `unknown` en `FinancialCard[]` de forma defensiva (si falta `cards`, devuelve `[]`).
+
+La UI consume esto mediante el hook `src/features/stepperFlow/hooks/useCards.ts`.
 
 ## Máquina de estados de la card
 
@@ -203,6 +227,15 @@ src/
 - Existe un _contract test_ (`src/app/i18n/__tests__/resources.test.ts`) que falla la build si las claves de `es.json` y `en.json` divergen.
 
 Para agregar una nueva clave alcanza con sumarla en ambos archivos manteniendo la misma ruta.
+
+## Manejo de errores (UX)
+
+- El hook `useCards` carga tarjetas al montar:
+  - si falla la request, setea `error` con un mensaje traducido (`errors.cardsLoadFailed` o `errors.network`) y muestra un toast vía `showErrorToast`.
+  - expone `refetch()` para reintentar manualmente.
+- En el paso 2 (`StepperFlowScreen`), si termina la carga y no hay tarjetas (`cards.length === 0`), se muestra un estado vacío con:
+  - el mensaje de `error` (si existe) o un fallback traducido,
+  - botón **Reintentar** que llama a `refetch()`.
 
 ## Accesibilidad (a11y)
 
