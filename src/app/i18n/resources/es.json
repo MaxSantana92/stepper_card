@@ -30,7 +30,8 @@
     },
     "details": {
       "description": "Repasá la información asociada a tu tarjeta antes de ver su estado final.",
-      "cardPickerTitle": "Elegí una tarjeta para ver su estado"
+      "cardPickerTitle": "Elegí una tarjeta para ver su estado",
+      "retry": "Reintentar"
     },
     "status": {
       "fallback": "Todavía no se seleccionó una tarjeta para mostrar su estado."
@@ -62,6 +63,10 @@
       "VISA_PLATINUM": "Visa Platinum",
       "VISA_SIGNATURE": "Visa Signature"
     }
+  },
+  "errors": {
+    "cardsLoadFailed": "No pudimos cargar tus tarjetas. Intentá de nuevo.",
+    "network": "Sin conexión. Revisá tu red e intentá de nuevo."
   },
   "a11y": {
     "home": {
