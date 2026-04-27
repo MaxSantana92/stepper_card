@@ -30,7 +30,8 @@
     },
     "details": {
       "description": "Review the information linked to your card before seeing its final status.",
-      "cardPickerTitle": "Pick a card to see its status"
+      "cardPickerTitle": "Pick a card to see its status",
+      "retry": "Retry"
     },
     "status": {
       "fallback": "No card has been selected yet to show its status."

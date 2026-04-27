@@ -5,4 +5,4 @@ export const API_TIMEOUT_MS = 8000;
 // error toast without touching the network. Has zero effect on the automated
 // test suite — tests configure their own mock adapter per case and never read
 // this flag.
-export const SIMULATE_CARDS_FETCH_FAILURE = true;
+export const SIMULATE_CARDS_FETCH_FAILURE = false;

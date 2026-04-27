@@ -30,7 +30,8 @@
     },
     "details": {
       "description": "Repasá la información asociada a tu tarjeta antes de ver su estado final.",
-      "cardPickerTitle": "Elegí una tarjeta para ver su estado"
+      "cardPickerTitle": "Elegí una tarjeta para ver su estado",
+      "retry": "Reintentar"
     },
     "status": {
       "fallback": "Todavía no se seleccionó una tarjeta para mostrar su estado."
