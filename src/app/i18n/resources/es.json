@@ -63,6 +63,10 @@
       "VISA_SIGNATURE": "Visa Signature"
     }
   },
+  "errors": {
+    "cardsLoadFailed": "No pudimos cargar tus tarjetas. Intentá de nuevo.",
+    "network": "Sin conexión. Revisá tu red e intentá de nuevo."
+  },
   "a11y": {
     "home": {
       "subtitle": "Mensaje de estado inicial del proyecto",
