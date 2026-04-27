@@ -5,16 +5,34 @@ import mockData from '../../services/mockData.json';
 import { AppRoot } from '../AppRoot';
 import i18n, { defaultLanguage, resources } from '../i18n';
 
+// Mock useCards at the hook boundary rather than at the service layer.
+// AppRoot integration tests verify stepper navigation and card UI — not the
+// async loading flow (that belongs to cardsApi.test.ts). Mocking the hook
+// makes cards available synchronously on first render, which avoids the
+// react-test-renderer async-act timing issues that fire spurious warnings.
+jest.mock('../../features/stepperFlow/hooks/useCards', () => ({
+  useCards: jest.fn().mockReturnValue({
+    cards: require('../../services/mockData.json').cards,
+    isLoading: false,
+    error: null,
+    refetch: jest.fn(),
+  }),
+}));
+
 const cards = mockData.cards as FinancialCard[];
 
-const renderApp = async () => {
-  let component: ReactTestRenderer.ReactTestRenderer | undefined;
+// Module-level ref so afterEach can unmount whatever the last test mounted.
+// Without explicit unmount, components from previous tests stay alive in
+// memory. When beforeEach changes the i18n language, those stale components
+// might re-run effects outside of act.
+let activeComponent: ReactTestRenderer.ReactTestRenderer | undefined;
 
+const renderApp = async () => {
   await ReactTestRenderer.act(() => {
-    component = ReactTestRenderer.create(<AppRoot />);
+    activeComponent = ReactTestRenderer.create(<AppRoot />);
   });
 
-  return component;
+  return activeComponent;
 };
 
 const findByTestID = (component: ReactTestRenderer.ReactTestRenderer | undefined, testID: string) =>
@@ -101,6 +119,15 @@ describe('AppRoot integration', () => {
     await ReactTestRenderer.act(async () => {
       await i18n.changeLanguage(defaultLanguage);
     });
+  });
+
+  afterEach(() => {
+    if (activeComponent) {
+      ReactTestRenderer.act(() => {
+        activeComponent!.unmount();
+      });
+      activeComponent = undefined;
+    }
   });
 
   it('renders the app header with the i18n title and flow intro copy', async () => {

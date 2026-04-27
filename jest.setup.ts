@@ -1,3 +1,11 @@
+jest.mock('react-native-toast-message', () => {
+  const React = require('react');
+  const ToastMock = () => React.createElement(React.Fragment, null);
+  ToastMock.show = jest.fn();
+  ToastMock.hide = jest.fn();
+  return { __esModule: true, default: ToastMock };
+});
+
 jest.mock('react-native-safe-area-context', () => {
   const React = require('react');
 

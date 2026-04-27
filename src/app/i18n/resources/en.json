@@ -63,6 +63,10 @@
       "VISA_SIGNATURE": "Visa Signature"
     }
   },
+  "errors": {
+    "cardsLoadFailed": "We couldn't load your cards. Please try again.",
+    "network": "No connection. Check your network and try again."
+  },
   "a11y": {
     "home": {
       "subtitle": "Initial project status message",
