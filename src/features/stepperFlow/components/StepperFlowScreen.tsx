@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 
 import { Subtitle } from '../../../components/ui/Typography';
+import { Button } from '../../../components/ui/Button';
+import { Body } from '../../../components/ui/Typography';
 import { colors, radii, spacing } from '../../../components/ui/theme';
 import { useCards } from '../hooks/useCards';
 import { useStepper } from '../hooks/useStepper';
@@ -30,7 +32,7 @@ const SNAP_INTERVAL = CARD_WIDTH + CARD_GAP;
 export const StepperFlowScreen = () => {
   const { t } = useTranslation();
   const { currentStep, selectedCard, selectCard } = useStepper();
-  const { cards, isLoading } = useCards();
+  const { cards, isLoading, error, refetch } = useCards();
 
   const handleSelectCard = useCallback(
     (card: FinancialCard) => {
@@ -130,6 +132,21 @@ export const StepperFlowScreen = () => {
               size="large"
               testID="cards-loading-indicator"
             />
+          ) : cards.length === 0 ? (
+            <View style={styles.emptyState} testID="cards-empty-state">
+              <Body align="center">{error ?? t('errors.cardsLoadFailed')}</Body>
+              <Button
+                accessibilityLabel={t('stepper.details.retry')}
+                fullWidth
+                onPress={() => {
+                  refetch();
+                }}
+                testID="cards-empty-state-retry"
+                variant="outline"
+              >
+                {t('stepper.details.retry')}
+              </Button>
+            </View>
           ) : (
             <>
               <FlatList<FinancialCard>
@@ -185,6 +202,12 @@ const styles = StyleSheet.create({
   },
   pickerBlock: {
     gap: spacing.md,
+  },
+  emptyState: {
+    gap: spacing.md,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.xl,
+    alignItems: 'center',
   },
   pickerList: {
     marginHorizontal: -spacing.xl,
